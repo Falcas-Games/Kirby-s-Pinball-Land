@@ -43,6 +43,13 @@ bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
 
+	App->textures->Unload(circle);
+	App->textures->Unload(box);
+	App->textures->Unload(rick);
+	App->textures->Unload(spritesheet);
+
+	//I DONT KNOW HOW TO DESTROY P2LIST OF PHYSBODIES
+
 	return true;
 }
 
