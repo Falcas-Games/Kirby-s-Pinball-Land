@@ -23,7 +23,10 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->renderer->camera.x = App->renderer->camera.y = 0;
+	spritesheet = App->textures->Load("pinball/spritesheet.png");
+
+	App->renderer->camera.x = 0;
+	App->renderer->camera.y = (-424+SCREEN_HEIGHT)*SCREEN_SIZE;
 
 	circle = App->textures->Load("pinball/wheel.png"); 
 	box = App->textures->Load("pinball/crate.png");
@@ -164,6 +167,13 @@ update_status ModuleSceneIntro::Update()
 		if(normal.x != 0.0f)
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
 	}
+
+	//RENDER MAP
+	SDL_Rect rect;
+	rect = { 0,0,160,424 };
+	App->renderer->DrawQuad(rect, 255, 255, 255, 255);
+	rect = { 2,2,160,424 };
+	App->renderer->Blit(spritesheet, 0, 0, &rect);
 
 	return UPDATE_CONTINUE;
 }

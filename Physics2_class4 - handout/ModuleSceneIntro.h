@@ -28,6 +28,8 @@ public:
 	SDL_Texture* circle;
 	SDL_Texture* box;
 	SDL_Texture* rick;
+	SDL_Texture* spritesheet;
+
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
