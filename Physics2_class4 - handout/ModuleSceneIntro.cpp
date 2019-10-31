@@ -178,9 +178,13 @@ update_status ModuleSceneIntro::Update()
 	//RENDER MAP
 	SDL_Rect rect;
 	rect = { 0,0,160,424 };
-	App->renderer->DrawQuad(rect, 255, 255, 255, 255);
+	App->renderer->DrawQuad(rect, 255, 255, 255, 255); //White Screen Behind
 	rect = { 2,2,160,424 };
-	App->renderer->Blit(spritesheet, 0, 0, &rect);
+	App->renderer->Blit(spritesheet, 0, 0, &rect); //Map Rect
+	rect = { 273,410,22,12 };
+	App->renderer->Blit(spritesheet, 89, 406,&rect); //Right Bumper
+	rect = { 233,410,22,12 };
+	App->renderer->Blit(spritesheet, 49, 406, &rect); //Left Bumper
 
 	return UPDATE_CONTINUE;
 }
