@@ -2,7 +2,7 @@
 #define __ANIMATION_H__
 
 #include "SDL/include/SDL_rect.h"
-#include "j1App.h"
+#include "Application.h"
 #include <math.h>
 #define MAX_FRAMES 50
 
