@@ -35,9 +35,11 @@ bool ModuleSceneIntro::Start()
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
-	porcupine.PushBack({ 165,304,16,16 });
-	porcupine.PushBack({ 184,304,16,16 });
+	porcupine.PushBack({ 165,304,16,16 },0.06f);
+	porcupine.PushBack({ 184,304,16,16 },0.06f);
 	porcupine.loop = true;
+
+	
 
 	return ret;
 }
@@ -189,9 +191,8 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(spritesheet, 89, 406,&rect); //Right Bumper
 	rect = { 233,410,22,12 };
 	App->renderer->Blit(spritesheet, 49, 406, &rect); //Left Bumper
-	rect = porcupine.GetCurrentRect();
-	App->renderer->Blit(spritesheet, 24, 312, &rect);
-	App->renderer->Blit(spritesheet, 119, 312, &rect);
+	App->renderer->Blit(spritesheet, 24, 312, &porcupine.GetCurrentFrame());
+	App->renderer->Blit(spritesheet, 119, 312, &porcupine.GetCurrentFrame());
 
 	return UPDATE_CONTINUE;
 }
