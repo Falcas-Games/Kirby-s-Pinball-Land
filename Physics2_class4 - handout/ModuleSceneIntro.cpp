@@ -34,12 +34,19 @@ bool ModuleSceneIntro::Start()
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
-
-	porcupine.PushBack({ 165,304,16,16 },0.06f);
-	porcupine.PushBack({ 184,304,16,16 },0.06f);
+	float speed = 0.06f;
+	porcupine.PushBack({ 165,304,16,16 },speed);
+	porcupine.PushBack({ 184,304,16,16 },speed);
 	porcupine.loop = true;
 
-	
+	speed = 0.04f;
+	casper.PushBack({ 167,323,15,15 },speed);
+	casper.PushBack({ 167,323,16,15 },speed);
+	casper.PushBack({ 204,323,16,15 },speed);
+	casper.PushBack({ 274,323,14,15 },speed);
+	casper.PushBack({ 291,323,14,15 },speed);
+	casper.PushBack({ 204,323,16,15 }, speed);
+	casper.loop = true;
 
 	return ret;
 }
@@ -193,6 +200,39 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(spritesheet, 49, 406, &rect); //Left Bumper
 	App->renderer->Blit(spritesheet, 24, 312, &porcupine.GetCurrentFrame());
 	App->renderer->Blit(spritesheet, 119, 312, &porcupine.GetCurrentFrame());
+
+	//movement casper
+	if (x_casper >= 12 && doing_cicle) {
+		if (y_casper >= 300) {
+			x_casper-=0.5f;
+			x_casper2 -= 0.5f;
+		}
+	}
+	if (x_casper <= 12) {
+		if (y_casper >= 300) {
+			y_casper -= 0.5f;
+			y_casper2 -= 0.5f;
+		}
+	}
+	if (y_casper <= 300) {
+		if (x_casper <= 38) {
+			x_casper += 0.5f;
+			x_casper2 += 0.5f;
+		}
+	}
+	if (x_casper >= 38) {
+		if (y_casper <= 326) {
+			doing_cicle = false;
+			y_casper += 0.5f;
+			y_casper2 += 0.5f;
+		}
+		else {
+			doing_cicle = true;
+		}
+	}
+	App->renderer->Blit(spritesheet, x_casper, y_casper, &casper.GetCurrentFrame());
+	App->renderer->Blit(spritesheet, x_casper2, y_casper2, &casper.GetCurrentFrame());
+
 
 	return UPDATE_CONTINUE;
 }

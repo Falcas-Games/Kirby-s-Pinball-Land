@@ -35,5 +35,17 @@ public:
 	bool ray_on;
 
 	Animation porcupine;
+	Animation casper;
 
+
+	float x_casper = 38; //12
+	float y_casper = 326; //304
+
+	float x_casper2 = 133;
+	float y_casper2 = 326;
+
+	bool doing_cicle = true;
+
+	// 300		35
+	// 326		
 };
