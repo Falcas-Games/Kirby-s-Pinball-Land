@@ -48,6 +48,13 @@ bool ModuleSceneIntro::Start()
 	casper.PushBack({ 204,323,16,15 }, speed);
 	casper.loop = true;
 
+	speed = 0.1f;
+	demon.PushBack({ 165,344,20,15 },speed);
+	demon.PushBack({ 187,343,20,16 },speed);
+	demon.PushBack({ 208,341,20,19 },speed);
+	demon.loop = true;
+
+
 	int spritesheet_1[46] = {
 		62, 293,
 		62, 314,
@@ -346,7 +353,7 @@ update_status ModuleSceneIntro::Update()
 	}
 	App->renderer->Blit(spritesheet, x_casper, y_casper, &casper.GetCurrentFrame());
 	App->renderer->Blit(spritesheet, x_casper2, y_casper2, &casper.GetCurrentFrame());
-
+	App->renderer->Blit(spritesheet, 71, 342, &demon.GetCurrentFrame());
 
 	return UPDATE_CONTINUE;
 }

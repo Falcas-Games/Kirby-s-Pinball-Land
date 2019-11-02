@@ -39,6 +39,7 @@ public:
 
 	Animation porcupine;
 	Animation casper;
+	Animation demon;
 
 
 	float x_casper = 38; //12
