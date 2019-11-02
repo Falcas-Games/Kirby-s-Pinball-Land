@@ -137,7 +137,7 @@ bool ModuleSceneIntro::Start()
 	walls.add(App->physics->CreateChain(-2, -2, spritesheet_6, 8, true));
 
 
-	ball=App->physics->CreateCircle(50, 50, 2);
+	ball=App->physics->CreateCircle(50, 50, 7);
 	ball->listener = this;
 
 	return ret;
@@ -300,7 +300,7 @@ update_status ModuleSceneIntro::Update()
 	rect = { 2,2,160,424 };
 	App->renderer->Blit(spritesheet, 0, 0, &rect); //Map Rect
 	rect = { 273,410,22,12 };
-	App->renderer->Blit(spritesheet, 89, 406,&rect,1.0f,bumper_right->GetRotation(),84,18); //Right Bumper
+	App->renderer->Blit(spritesheet, 89, 406,&rect,1.0f,bumper_right->GetRotation(),86,18); //Right Bumper
 	rect = { 233,410,22,12 };
 	App->renderer->Blit(spritesheet, 49, 406, &rect, 1.0f, bumper_left->GetRotation(),22,18); //Left Bumper
 	App->renderer->Blit(spritesheet, 24, 312, &porcupine.GetCurrentFrame());
