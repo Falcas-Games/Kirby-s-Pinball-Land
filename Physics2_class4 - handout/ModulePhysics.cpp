@@ -36,36 +36,40 @@ bool ModulePhysics::Start()
 	b2BodyDef bd;
 	ground = world->CreateBody(&bd);
 
-	// bumper left
+	// bumper left circle
 	b2BodyDef body;
 	body.type = b2_staticBody;
 	body.position.Set(PIXEL_TO_METERS(54), PIXEL_TO_METERS(411));
+	b2Body* point_rotation = world->CreateBody(&body);
 
-	b2Body* ball = world->CreateBody(&body);
-
-
-
-	b2CircleShape shape;
-	shape.m_radius = PIXEL_TO_METERS(1);
-
-	b2FixtureDef fixture;
-	fixture.shape = &shape;
-	ball->CreateFixture(&fixture);
 	
+
+	//bumper left
 	
 	PhysBody* bumper_phys;// = CreateRectangle(60.5, 414, 22, 16);
 	int width = 22;
 	int height = 16;
 	b2BodyDef body2;
 	body2.type = b2_dynamicBody;
-	body2.position.Set(PIXEL_TO_METERS(60.5), PIXEL_TO_METERS(414));
+	body2.position.Set(PIXEL_TO_METERS(50), PIXEL_TO_METERS(404));
 
 	b2Body* b = world->CreateBody(&body2);
+
+	b2Vec2 vertices[5];
+	vertices[0].Set(PIXEL_TO_METERS(0), PIXEL_TO_METERS(0));
+	vertices[1].Set(PIXEL_TO_METERS(1), PIXEL_TO_METERS(8));
+	vertices[2].Set(PIXEL_TO_METERS(22), PIXEL_TO_METERS(9));
+	vertices[3].Set(PIXEL_TO_METERS(8), PIXEL_TO_METERS(1));
+	vertices[4].Set(PIXEL_TO_METERS(2), PIXEL_TO_METERS(0));
+	int32 count = 5;
 	b2PolygonShape box;
-	box.SetAsBox(PIXEL_TO_METERS(width) * 0.5f, PIXEL_TO_METERS(height) * 0.5f);
+	box.Set(vertices, count);
+
+
 
 	b2FixtureDef fixture2;
 	fixture2.shape = &box;
+	fixture2.filter.groupIndex = -1;
 	fixture2.density = 1.0f;
 
 	b->CreateFixture(&fixture2);
@@ -75,13 +79,13 @@ bool ModulePhysics::Start()
 	b->SetUserData(bumper_phys);
 	bumper_phys->width = width * 0.5f;
 	bumper_phys->height = height * 0.5f;
-	
+
 	App->scene_intro->bumper_left = bumper_phys;
 	b2RevoluteJointDef bumper_joint_def;
-	bumper_joint_def.bodyA = ball;
+	bumper_joint_def.bodyA = point_rotation;
 	bumper_joint_def.bodyB = bumper_phys->body;
 	bumper_joint_def.localAnchorA.Set(0, 0);
-	bumper_joint_def.localAnchorB.Set(PIXEL_TO_METERS(-11), PIXEL_TO_METERS(-3));
+	bumper_joint_def.localAnchorB.Set(PIXEL_TO_METERS(6), PIXEL_TO_METERS(5));
 	bumper_joint_def.collideConnected = false;
 	bumper_joint_def.enableLimit = true;
 	bumper_joint_def.referenceAngle = 0;
@@ -195,7 +199,7 @@ PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int heig
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
+PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size, bool not_collide_bumpers)
 {
 	b2BodyDef body;
 	body.type = b2_staticBody;
@@ -216,7 +220,7 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
-
+	if (not_collide_bumpers == true)fixture.filter.groupIndex = -1;
 	b->CreateFixture(&fixture);
 
 	delete p;
@@ -256,7 +260,6 @@ update_status ModulePhysics::PostUpdate()
 				b2CircleShape* shape = (b2CircleShape*)f->GetShape();
 				b2Vec2 pos = f->GetBody()->GetPosition();
 				App->renderer->DrawCircle(METERS_TO_PIXELS(pos.x), METERS_TO_PIXELS(pos.y), METERS_TO_PIXELS(shape->m_radius), 255, 255, 255);
-				LOG("%f	%f", pos.x, pos.y);
 			}
 			break;
 
@@ -443,21 +446,19 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 
 void ModulePhysics::MoveBumper(int bumper_num, bool move_up) {
-	if (bumper_joint_left->IsMotorEnabled() == true&&bumper_joint_left->GetMotorSpeed()<0)LOG("MOTOR");
 	if (bumper_num == 1) {
 		if (move_up==true) {
 			if (bumper_joint_left->GetJointAngle() == (-45 * DEGTORAD)) bumper_joint_left->SetMotorSpeed(0);
 			else {
 				bumper_joint_left->EnableMotor(true);
-				bumper_joint_left->SetMotorSpeed(-360 * DEGTORAD);
-				//LOG("%f, %f", bumper_joint_left->GetJointAngle(), -45 * DEGTORAD);
+				bumper_joint_left->SetMotorSpeed(-1800 * DEGTORAD);
 			}
 		}
 		else {
 			if (bumper_joint_left->GetJointAngle() == 0) bumper_joint_left->EnableMotor(false);
 			else {
 				bumper_joint_left->EnableMotor(true);
-				bumper_joint_left->SetMotorSpeed(360 * DEGTORAD);
+				bumper_joint_left->SetMotorSpeed(1800 * DEGTORAD);
 			}
 		}
 	}

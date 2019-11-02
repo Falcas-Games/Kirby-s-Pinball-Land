@@ -129,13 +129,16 @@ bool ModuleSceneIntro::Start()
 	};
 
 
-	walls.add(App->physics->CreateChain(-2,-2, spritesheet_1, 46));
-	walls.add(App->physics->CreateChain(-2, -2, spritesheet_2, 44));
-	walls.add(App->physics->CreateChain(-2, -2, spritesheet_3, 14));
-	walls.add(App->physics->CreateChain(-2, -2, spritesheet_4, 14));
-	walls.add(App->physics->CreateChain(-2, -2, spritesheet_5, 8));
-	walls.add(App->physics->CreateChain(-2, -2, spritesheet_6, 8));
+	walls.add(App->physics->CreateChain(-2,-2, spritesheet_1, 46, true));
+	walls.add(App->physics->CreateChain(-2, -2, spritesheet_2, 44, true));
+	walls.add(App->physics->CreateChain(-2, -2, spritesheet_3, 14, true));
+	walls.add(App->physics->CreateChain(-2, -2, spritesheet_4, 14, true));
+	walls.add(App->physics->CreateChain(-2, -2, spritesheet_5, 8, true));
+	walls.add(App->physics->CreateChain(-2, -2, spritesheet_6, 8, true));
 
+
+	ball=App->physics->CreateCircle(50, 50, 2);
+	ball->listener = this;
 
 	return ret;
 }
@@ -291,16 +294,21 @@ update_status ModuleSceneIntro::Update()
 
 	//RENDER MAP
 	SDL_Rect rect;
+	int x, y;
 	rect = { 0,0,160,424 };
-	App->renderer->DrawQuad(rect, 255, 255, 255, 255); //White Screen Behind
+	//App->renderer->DrawQuad(rect, 255, 255, 255, 255); //White Screen Behind
 	rect = { 2,2,160,424 };
 	App->renderer->Blit(spritesheet, 0, 0, &rect); //Map Rect
 	rect = { 273,410,22,12 };
 	App->renderer->Blit(spritesheet, 89, 406,&rect); //Right Bumper
 	rect = { 233,410,22,12 };
-	App->renderer->Blit(spritesheet, 49, 406, &rect, 1.0f, bumper_left->GetRotation()); //Left Bumper
+	bumper_left->GetPosition(x, y);
+	App->renderer->Blit(spritesheet, x+10, y+10, &rect, 1.0f, bumper_left->GetRotation()); //Left Bumper
 	App->renderer->Blit(spritesheet, 24, 312, &porcupine.GetCurrentFrame());
 	App->renderer->Blit(spritesheet, 119, 312, &porcupine.GetCurrentFrame());
+	rect = { 272,395,14,14 };
+	ball->GetPosition(x, y);
+	App->renderer->Blit(spritesheet, x, y, &rect); //Right Bumper
 
 	///if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)App->renderer->camera.y++;
 	//else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)App->renderer->camera.y--;

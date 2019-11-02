@@ -25,7 +25,7 @@ public:
 	p2List<PhysBody*> walls;
 	PhysBody* bumper_left;
 	PhysBody* bumper_right;
-
+	PhysBody* ball;
 	PhysBody* sensor;
 	bool sensed;
 
