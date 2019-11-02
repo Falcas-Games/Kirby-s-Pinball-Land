@@ -36,24 +36,24 @@ bool ModulePhysics::Start()
 	b2BodyDef bd;
 	ground = world->CreateBody(&bd);
 
-	// bumper left circle
+	// bumper left rotation
 	b2BodyDef body;
 	body.type = b2_staticBody;
 	body.position.Set(PIXEL_TO_METERS(54), PIXEL_TO_METERS(411));
-	b2Body* point_rotation = world->CreateBody(&body);
+	b2Body* point_rotation_left = world->CreateBody(&body);
 
 	
 
 	//bumper left
 	
-	PhysBody* bumper_phys;// = CreateRectangle(60.5, 414, 22, 16);
+	PhysBody* bumper_phys_left;// = CreateRectangle(60.5, 414, 22, 16);
 	int width = 0;
 	int height = 0;
-	b2BodyDef body2;
-	body2.type = b2_dynamicBody;
-	body2.position.Set(PIXEL_TO_METERS(50), PIXEL_TO_METERS(404));
+	body;
+	body.type = b2_dynamicBody;
+	body.position.Set(PIXEL_TO_METERS(50), PIXEL_TO_METERS(404));
 
-	b2Body* b = world->CreateBody(&body2);
+	b2Body* b = world->CreateBody(&body);
 
 	b2Vec2 vertices[5];
 	vertices[0].Set(PIXEL_TO_METERS(0), PIXEL_TO_METERS(0));
@@ -67,23 +67,24 @@ bool ModulePhysics::Start()
 
 
 
-	b2FixtureDef fixture2;
-	fixture2.shape = &box;
-	fixture2.filter.groupIndex = -1;
-	fixture2.density = 1.0f;
+	b2FixtureDef fixture;
+	fixture.shape = &box;
+	fixture.filter.groupIndex = -1;
+	fixture.density = 1.0f;
 
-	b->CreateFixture(&fixture2);
+	b->CreateFixture(&fixture);
 
-	bumper_phys = new PhysBody();
-	bumper_phys->body = b;
-	b->SetUserData(bumper_phys);
-	bumper_phys->width = width * 0.5f;
-	bumper_phys->height = height * 0.5f;
+	bumper_phys_left = new PhysBody();
+	bumper_phys_left->body = b;
+	b->SetUserData(bumper_phys_left);
+	bumper_phys_left->width = width * 0.5f;
+	bumper_phys_left->height = height * 0.5f;
 
-	App->scene_intro->bumper_left = bumper_phys;
+	//joint bumper left
+	App->scene_intro->bumper_left = bumper_phys_left;
 	b2RevoluteJointDef bumper_joint_def;
-	bumper_joint_def.bodyA = point_rotation;
-	bumper_joint_def.bodyB = bumper_phys->body;
+	bumper_joint_def.bodyA = point_rotation_left;
+	bumper_joint_def.bodyB = bumper_phys_left->body;
 	bumper_joint_def.localAnchorA.Set(0, 0);
 	bumper_joint_def.localAnchorB.Set(PIXEL_TO_METERS(6), PIXEL_TO_METERS(5));
 	bumper_joint_def.collideConnected = false;
@@ -96,6 +97,59 @@ bool ModulePhysics::Start()
 	bumper_joint_def.motorSpeed = 0 * DEGTORAD;
 	bumper_joint_left = (b2RevoluteJoint*)world->CreateJoint(&bumper_joint_def);
 
+
+	// bumper right rotation
+	body.type = b2_staticBody;
+	body.position.Set(PIXEL_TO_METERS(107), PIXEL_TO_METERS(411));
+	b2Body* point_rotation_right = world->CreateBody(&body);
+
+
+
+	//bumper right
+
+	PhysBody* bumper_phys_right;// = CreateRectangle(60.5, 414, 22, 16);
+	body;
+	body.type = b2_dynamicBody;
+	body.position.Set(PIXEL_TO_METERS(100), PIXEL_TO_METERS(404));
+
+	b2Body* b2 = world->CreateBody(&body);
+
+	//b2Vec2 vertices[5];
+	vertices[0].Set(PIXEL_TO_METERS(0), PIXEL_TO_METERS(0));
+	vertices[1].Set(PIXEL_TO_METERS(-1), PIXEL_TO_METERS(8));
+	vertices[2].Set(PIXEL_TO_METERS(-22), PIXEL_TO_METERS(9));
+	vertices[3].Set(PIXEL_TO_METERS(-8), PIXEL_TO_METERS(1));
+	vertices[4].Set(PIXEL_TO_METERS(-2), PIXEL_TO_METERS(0));
+	box.Set(vertices, count);
+
+
+
+	fixture.shape = &box;
+	fixture.filter.groupIndex = -1;
+	fixture.density = 1.0f;
+
+	b2->CreateFixture(&fixture);
+
+	bumper_phys_right = new PhysBody();
+	bumper_phys_right->body = b2;
+	b2->SetUserData(bumper_phys_right);
+	bumper_phys_right->width = width * 0.5f;
+	bumper_phys_right->height = height * 0.5f;
+
+	App->scene_intro->bumper_right = bumper_phys_right;
+	bumper_joint_def.bodyA = point_rotation_right;
+	bumper_joint_def.bodyB = bumper_phys_right->body;
+	bumper_joint_def.localAnchorA.Set(0, 0);
+	bumper_joint_def.localAnchorB.Set(PIXEL_TO_METERS(-6), PIXEL_TO_METERS(5));
+	bumper_joint_def.collideConnected = false;
+	bumper_joint_def.enableLimit = true;
+	bumper_joint_def.referenceAngle = 0;
+	bumper_joint_def.lowerAngle = 0;
+	bumper_joint_def.upperAngle = 45 * DEGTORAD;
+	bumper_joint_def.enableMotor = false;
+	bumper_joint_def.maxMotorTorque = 100.0f;
+	bumper_joint_def.motorSpeed = 0 * DEGTORAD;
+	bumper_joint_right = (b2RevoluteJoint*)world->CreateJoint(&bumper_joint_def);
 
 
 
@@ -464,17 +518,18 @@ void ModulePhysics::MoveBumper(int bumper_num, bool move_up) {
 	}
 	else if (bumper_num == 2) {
 		if (move_up == true) {
-			if (bumper_joint_right->GetJointAngle() == (-45 * DEGTORAD)) bumper_joint_right->SetMotorSpeed(0);
+			LOG("%f", bumper_joint_right->GetJointAngle());
+			if (bumper_joint_right->GetJointAngle() == (45 * DEGTORAD)) bumper_joint_right->SetMotorSpeed(0);
 			else {
 				bumper_joint_right->EnableMotor(true);
-				bumper_joint_right->SetMotorSpeed(-360 * DEGTORAD);
+				bumper_joint_right->SetMotorSpeed(1800 * DEGTORAD);
 			}
 		}
 		else {
 			if (bumper_joint_right->GetJointAngle() == 0) bumper_joint_right->EnableMotor(false);
 			else {
 				bumper_joint_right->EnableMotor(true);
-				bumper_joint_right->SetMotorSpeed(360 * DEGTORAD);
+				bumper_joint_right->SetMotorSpeed(-1800 * DEGTORAD);
 			}
 		}
 	}

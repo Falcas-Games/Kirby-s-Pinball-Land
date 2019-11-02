@@ -120,7 +120,6 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 		pivot.x = pivot_x;
 		pivot.y = pivot_y;
 		p = &pivot;
-		LOG("%d, %d", rect.w, rect.h);
 	}
 
 	if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, SDL_FLIP_NONE) != 0)
