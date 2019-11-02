@@ -296,14 +296,14 @@ update_status ModuleSceneIntro::Update()
 	SDL_Rect rect;
 	int x, y;
 	rect = { 0,0,160,424 };
-	//App->renderer->DrawQuad(rect, 255, 255, 255, 255); //White Screen Behind
+	App->renderer->DrawQuad(rect, 255, 255, 255, 255); //White Screen Behind
 	rect = { 2,2,160,424 };
 	App->renderer->Blit(spritesheet, 0, 0, &rect); //Map Rect
 	rect = { 273,410,22,12 };
 	App->renderer->Blit(spritesheet, 89, 406,&rect); //Right Bumper
 	rect = { 233,410,22,12 };
 	bumper_left->GetPosition(x, y);
-	App->renderer->Blit(spritesheet, x+10, y+10, &rect, 1.0f, bumper_left->GetRotation()); //Left Bumper
+	App->renderer->Blit(spritesheet, 49, 406, &rect, 1.0f, bumper_left->GetRotation(),22,18); //Left Bumper
 	App->renderer->Blit(spritesheet, 24, 312, &porcupine.GetCurrentFrame());
 	App->renderer->Blit(spritesheet, 119, 312, &porcupine.GetCurrentFrame());
 	rect = { 272,395,14,14 };

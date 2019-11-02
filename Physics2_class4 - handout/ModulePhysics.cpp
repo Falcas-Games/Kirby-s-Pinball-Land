@@ -47,8 +47,8 @@ bool ModulePhysics::Start()
 	//bumper left
 	
 	PhysBody* bumper_phys;// = CreateRectangle(60.5, 414, 22, 16);
-	int width = 22;
-	int height = 16;
+	int width = 0;
+	int height = 0;
 	b2BodyDef body2;
 	body2.type = b2_dynamicBody;
 	body2.position.Set(PIXEL_TO_METERS(50), PIXEL_TO_METERS(404));
