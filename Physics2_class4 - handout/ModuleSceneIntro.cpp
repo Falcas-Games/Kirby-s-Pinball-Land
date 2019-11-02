@@ -115,12 +115,26 @@ bool ModuleSceneIntro::Start()
 		112, 408,
 		115, 412
 	};
+	int spritesheet_5[8] = {
+		113, 394,
+		123, 389,
+		123, 379,
+		113, 392
+	};
+	int spritesheet_6[8] = {
+		42, 379,
+		42, 390,
+		52, 394,
+		43, 380
+	};
 
 
-	walls.add(App->physics->CreateChain(-2,0, spritesheet_1, 46));
-	walls.add(App->physics->CreateChain(-2, 0, spritesheet_2, 44));
+	walls.add(App->physics->CreateChain(-2,-2, spritesheet_1, 46));
+	walls.add(App->physics->CreateChain(-2, -2, spritesheet_2, 44));
 	walls.add(App->physics->CreateChain(-2, -2, spritesheet_3, 14));
 	walls.add(App->physics->CreateChain(-2, -2, spritesheet_4, 14));
+	walls.add(App->physics->CreateChain(-2, -2, spritesheet_5, 8));
+	walls.add(App->physics->CreateChain(-2, -2, spritesheet_6, 8));
 
 
 	return ret;
