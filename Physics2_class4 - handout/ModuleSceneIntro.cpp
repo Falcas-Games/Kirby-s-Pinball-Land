@@ -48,6 +48,81 @@ bool ModuleSceneIntro::Start()
 	casper.PushBack({ 204,323,16,15 }, speed);
 	casper.loop = true;
 
+	int spritesheet_1[46] = {
+		62, 293,
+		62, 314,
+		58, 320,
+		58, 306,
+		52, 298,
+		43, 296,
+		16, 297,
+		11, 302,
+		8, 310,
+		8, 335,
+		15, 344,
+		24, 353,
+		24, 366,
+		18, 370,
+		14, 377,
+		14, 384,
+		14, 409,
+		18, 414,
+		30, 421,
+		40, 425,
+		1, 426,
+		0, 286,
+		56, 292
+	};
+	int spritesheet_2[44] = {
+		102, 293,
+		102, 312,
+		106, 320,
+		107, 307,
+		110, 300,
+		117, 297,
+		126, 296,
+		146, 296,
+		154, 302,
+		156, 315,
+		156, 334,
+		153, 339,
+		140, 353,
+		140, 367,
+		146, 370,
+		150, 376,
+		150, 408,
+		145, 417,
+		123, 425,
+		161, 425,
+		161, 287,
+		111, 293
+	};
+	int spritesheet_3[14] = {
+		28, 402,
+		50, 414,
+		51, 408,
+		31, 396,
+		31, 380,
+		27, 380,
+		27, 401
+	};
+	int spritesheet_4[14] = {
+		115, 413,
+		136, 402,
+		136, 380,
+		134, 380,
+		134, 397,
+		112, 408,
+		115, 412
+	};
+
+
+	walls.add(App->physics->CreateChain(-2,0, spritesheet_1, 46));
+	walls.add(App->physics->CreateChain(-2, 0, spritesheet_2, 44));
+	walls.add(App->physics->CreateChain(-2, -2, spritesheet_3, 14));
+	walls.add(App->physics->CreateChain(-2, -2, spritesheet_4, 14));
+
+
 	return ret;
 }
 
@@ -128,6 +203,8 @@ update_status ModuleSceneIntro::Update()
 		ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64));
 	}
 
+	
+
 	// Prepare for raycast ------------------------------------------------------
 
 	iPoint mouse;
@@ -166,6 +243,16 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	c = ricks.getFirst();
+
+	while (c != NULL)
+	{
+		int x, y;
+		c->data->GetPosition(x, y);
+		App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
+		c = c->next;
+	}
+
+	c = walls.getFirst();
 
 	while (c != NULL)
 	{
