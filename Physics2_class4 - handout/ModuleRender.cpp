@@ -61,11 +61,11 @@ update_status ModuleRender::Update()
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		App->renderer->camera.y -= speed;
 
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->renderer->camera.x += speed;
+	//if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		//App->renderer->camera.x += speed;
 
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->renderer->camera.x -= speed;
+	//if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	//	App->renderer->camera.x -= speed;
 	
 	return UPDATE_CONTINUE;
 }
@@ -192,11 +192,19 @@ bool ModuleRender::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 
 	SDL_Point points[360];
 
 	float factor = (float) M_PI / 180.0f;
-
-	for(uint i = 0; i < 360; ++i)
-	{
-		points[i].x = (int) (x + radius * cos( i * factor));
-		points[i].y = (int) (y + radius * sin( i * factor));
+	if (use_camera) {
+		for (uint i = 0; i < 360; ++i)
+		{
+			points[i].x = (int)(camera.x + (x + radius * cos(i * factor)) * SCREEN_SIZE);
+			points[i].y = (int)(camera.y + (y + radius * sin(i * factor)) * SCREEN_SIZE);
+		}
+	}
+	else {
+		for (uint i = 0; i < 360; ++i)
+		{
+			points[i].x = (int)(x + radius * cos(i * factor));
+			points[i].y = (int)(y + radius * sin(i * factor));
+		}
 	}
 
 	result = SDL_RenderDrawPoints(renderer, points, 360);

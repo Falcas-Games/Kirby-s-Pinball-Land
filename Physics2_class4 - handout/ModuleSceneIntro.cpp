@@ -284,10 +284,14 @@ update_status ModuleSceneIntro::Update()
 	rect = { 273,410,22,12 };
 	App->renderer->Blit(spritesheet, 89, 406,&rect); //Right Bumper
 	rect = { 233,410,22,12 };
-	App->renderer->Blit(spritesheet, 49, 406, &rect); //Left Bumper
+	App->renderer->Blit(spritesheet, 49, 406, &rect, 1.0f, bumper_left->GetRotation()); //Left Bumper
 	App->renderer->Blit(spritesheet, 24, 312, &porcupine.GetCurrentFrame());
 	App->renderer->Blit(spritesheet, 119, 312, &porcupine.GetCurrentFrame());
 
+	///if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)App->renderer->camera.y++;
+	//else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)App->renderer->camera.y--;
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) App->physics->MoveBumper(1, true);
+	else App->physics->MoveBumper(1, false);
 	//movement casper
 	if (x_casper >= 12 && doing_cicle) {
 		if (y_casper >= 300) {

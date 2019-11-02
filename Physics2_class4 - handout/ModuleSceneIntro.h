@@ -23,6 +23,8 @@ public:
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> ricks;
 	p2List<PhysBody*> walls;
+	PhysBody* bumper_left;
+	PhysBody* bumper_right;
 
 	PhysBody* sensor;
 	bool sensed;
