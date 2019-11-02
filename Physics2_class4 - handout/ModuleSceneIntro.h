@@ -22,6 +22,9 @@ public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> ricks;
+	PhysBody* bumper_left;
+	PhysBody* bumper_right;
+
 
 	PhysBody* sensor;
 	bool sensed;

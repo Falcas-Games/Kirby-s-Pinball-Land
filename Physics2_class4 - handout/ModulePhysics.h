@@ -47,6 +47,8 @@ public:
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
 
+	void MoveBumper(int bumper, bool move_up);
+
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
 
@@ -55,6 +57,8 @@ private:
 	bool debug;
 	b2World* world;
 	b2MouseJoint* mouse_joint;
+	b2RevoluteJoint* bumper_joint_left;
+	b2RevoluteJoint* bumper_joint_right;
 	b2Body* ground;
 
 
