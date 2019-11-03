@@ -109,7 +109,6 @@ bool ModuleSceneIntro::Start()
 		125, 438,
 		161, 425,
 		160, 284,
-		59, 286
 	};
 	int spritesheet_3[12] = {
 		28, 383,
@@ -140,7 +139,7 @@ bool ModuleSceneIntro::Start()
 	};
 
 
-	walls.add(App->physics->CreateChain(-2,-2, spritesheet_1, 42, true));
+	walls.add(App->physics->CreateChain(-2,-2, spritesheet_1, 40, true));
 	walls.add(App->physics->CreateChain(-2, -2, spritesheet_2, 44, true));
 	walls.add(App->physics->CreateChain(-2, -2, spritesheet_3, 12, true));
 	walls.add(App->physics->CreateChain(-2, -2, spritesheet_4, 10, true));
