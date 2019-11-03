@@ -36,10 +36,7 @@ public:
 	PhysBody* p_demon;
 	bool sensed;
 
-	SDL_Texture* circle;
-	SDL_Texture* box;
-	SDL_Texture* rick;
-	SDL_Texture* spritesheet;
+	
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
@@ -61,4 +58,10 @@ public:
 
 	// 300		35
 	// 326		
+
+private:
+	SDL_Texture* circle;
+	SDL_Texture* box;
+	SDL_Texture* rick;
+	SDL_Texture* spritesheet;
 };

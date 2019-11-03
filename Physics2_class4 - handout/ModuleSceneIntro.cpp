@@ -12,6 +12,7 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	circle = box = rick = NULL;
 	ray_on = false;
 	sensed = false;
+	//level = 3;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
