@@ -438,19 +438,25 @@ update_status ModuleSceneIntro::Update()
 		if (App->player->top_score < App->player->score)App->player->top_score = App->player->score;
 		sprintf_s(score_text, 10, "%7d", App->player->score);
 		App->fonts->BlitText(0, 417, 2, score_text, 0);
-		sprintf_s(score_text, 10, "%7d", App->player->top_score);
-		for (int i = App->player->top_score; i > 10; i *= 0.1)j++;
+		sprintf_s(score_text, 10, "%7d", App->player->last_score);
+		for (int i = App->player->last_score; i > 10; i *= 0.1)j++;
 		App->fonts->BlitText(152-(8*j), 417, 2, score_text, 0);
-		//App->fonts->BlitText(0, 287, 2, score_text, 1);
+		sprintf_s(score_text, 10, "%7d", App->player->top_score);
+		j = 0;
+		for (int i = App->player->top_score; i > 10; i *= 0.1)j++;
+		App->fonts->BlitText(152 - (8 * j), 287, 2, score_text, 0);
 	}
 	else if (App->player->level == 4) {
 		if (App->player->top_score < App->player->score)App->player->top_score = App->player->score;
 		sprintf_s(score_text, 10, "%7d", App->player->score);
 		App->fonts->BlitText(0, 554, 2, score_text, 0);
-		sprintf_s(score_text, 10, "%7d", App->player->top_score);
-		for (int i = App->player->top_score; i > 10; i *= 0.1)j++;
+		sprintf_s(score_text, 10, "%7d", App->player->last_score);
+		for (int i = App->player->last_score; i > 10; i *= 0.1)j++;
 		App->fonts->BlitText(152-(8*j), 554, 2, score_text, 0);
-		//App->fonts->BlitText(0, 424, 2, score_text, 1);
+		sprintf_s(score_text, 10, "%7d", App->player->top_score);
+		j = 0;
+		for (int i = App->player->top_score; i > 10; i *= 0.1)j++;
+		App->fonts->BlitText(152-(8*j), 424, 2, score_text, 0);
 	}
 	return UPDATE_CONTINUE;
 }
