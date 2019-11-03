@@ -202,6 +202,7 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+	if (demon_not_visible == true)p_demon = NULL;
 	if (demon_not_visible == false && p_demon == NULL) {
 		p_demon = App->physics->CreateCircle(81, 351, 9);
 		p_demon->listener = this;
@@ -421,7 +422,7 @@ update_status ModuleSceneIntro::Update()
 			App->player->lives--;
 			App->player->live_losed = true;
 			scarfy_number = 0;
-			App->physics->DestroyBody(p_demon);
+			if (p_demon != NULL)App->physics->DestroyBody(p_demon);
 			score_demon_not_visible = App->player->score;
 			demon_not_visible = true;
 		}
@@ -479,10 +480,7 @@ update_status ModuleSceneIntro::Update()
 		rect = { 348,323,11,11 };
 		for (int i = App->player->lives; i > 0; i--) App->renderer->Blit(spritesheet, (i - 1) * 11, 424, &rect);
 	}
-	if (demon_not_visible == true && score_demon_not_visible + 1000 <= App->player->score) {
-		demon_not_visible = false;
-		p_demon = NULL;
-	}
+	if (demon_not_visible == true && score_demon_not_visible + 1000 <= App->player->score) demon_not_visible = false;
 	return UPDATE_CONTINUE;
 }
 
@@ -529,7 +527,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		else {
 			scarfy_number = 0;
 			App->player->lives++;
-			App->physics->DestroyBody(p_demon);
+			if(p_demon!=NULL)App->physics->DestroyBody(p_demon);
 			demon_not_visible = true;
 			score_demon_not_visible = App->player->score;
 		}
