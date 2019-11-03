@@ -161,11 +161,11 @@ bool ModuleSceneIntro::Start()
 	score_demon_not_visible = 0;
 	p_demon = NULL;
 
-	p_casper1 = App->physics->CreateCircle(46, 332, 8);
+	p_casper1 = App->physics->CreateCircle(23, 332, 8);
 	p_casper1->listener = this;
 	p_casper1->body->SetType (b2_kinematicBody);
 
-	p_casper2 = App->physics->CreateCircle(141, 332, 8);
+	p_casper2 = App->physics->CreateCircle(118, 332, 8);
 	p_casper2->listener = this;
 	p_casper2->body->SetType(b2_kinematicBody);
 
@@ -372,24 +372,18 @@ update_status ModuleSceneIntro::Update()
 		if (y_casper >= 300) {
 			x_casper-=0.5f;
 			x_casper2 -= 0.5f;
-			p_casper1->body->SetLinearVelocity({ -0.55f,0.0f });
-			p_casper2->body->SetLinearVelocity({ -0.55f,0.0f });
 		}
 	}
 	if (x_casper <= 12) {
 		if (y_casper >= 300) {
 			y_casper -= 0.5f;
 			y_casper2 -= 0.5f;
-			p_casper1->body->SetLinearVelocity({ 0.0f,-0.55f });
-			p_casper2->body->SetLinearVelocity({ 0.0f,-0.55f });
 		}
 	}
 	if (y_casper <= 300) {
 		if (x_casper <= 38) {
 			x_casper += 0.5f;
 			x_casper2 += 0.5f;
-			p_casper1->body->SetLinearVelocity({ 0.55f,0.0f });
-			p_casper2->body->SetLinearVelocity({ 0.55f,0.0f });
 		}
 	}
 	if (x_casper >= 38) {
@@ -397,12 +391,42 @@ update_status ModuleSceneIntro::Update()
 			doing_cicle = false;
 			y_casper += 0.5f;
 			y_casper2 += 0.5f;
-			p_casper1->body->SetLinearVelocity({ 0.0f,0.55f });
-			p_casper2->body->SetLinearVelocity({ 0.0f,0.55f });
 		}
 		else {
 			doing_cicle = true;
 		}
+	}
+	if (x_casper == 11.5 && y_casper < 326.5) {
+		p_casper1->body->SetLinearVelocity({ 0.0f,-0.5f });
+		p_casper2->body->SetLinearVelocity({ 0.0f,-0.5f });
+	}
+	else if (x_casper == 11.5 && y_casper == 326.5) {
+		p_casper1->body->SetLinearVelocity({ -0.5f,-0.5f });
+		p_casper2->body->SetLinearVelocity({ -0.5f,-0.5f });
+	}
+	else if (x_casper == 38.5 && y_casper > 299.5) {
+		p_casper1->body->SetLinearVelocity({ 0.0f,0.5f });
+		p_casper2->body->SetLinearVelocity({ 0.0f,0.5f });
+	}
+	else if (x_casper == 38.5 && y_casper == 299.5) {
+		p_casper1->body->SetLinearVelocity({ 0.5f,0.5f });
+		p_casper2->body->SetLinearVelocity({ 0.5f,0.5f });
+	}
+	else if (y_casper == 326.5 && x_casper < 38.5) {
+		p_casper1->body->SetLinearVelocity({ -0.5f,0.0f });
+		p_casper2->body->SetLinearVelocity({ -0.5f,0.0f });
+	}
+	else if (y_casper == 326.5 && x_casper == 38.5) {
+		p_casper1->body->SetLinearVelocity({ -0.5f,-0.5f });
+		p_casper2->body->SetLinearVelocity({ -0.5f,-0.5f });
+	}
+	else if (y_casper == 299.5 && x_casper > 11.5) {
+		p_casper1->body->SetLinearVelocity({ 0.5f,0.0f });
+		p_casper2->body->SetLinearVelocity({ 0.5f,0.0f });
+	}
+	else if (y_casper == 299.5 && x_casper == 11.5) {
+		p_casper1->body->SetLinearVelocity({ 0.5f,0.5f });
+		p_casper2->body->SetLinearVelocity({ 0.5f,0.5f });
 	}
 	App->renderer->Blit(spritesheet, x_casper, y_casper, &casper.GetCurrentFrame());
 	App->renderer->Blit(spritesheet, x_casper2, y_casper2, &casper.GetCurrentFrame());
