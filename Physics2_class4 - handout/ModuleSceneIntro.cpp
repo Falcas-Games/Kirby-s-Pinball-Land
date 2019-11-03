@@ -44,7 +44,6 @@ bool ModuleSceneIntro::Start()
 	App->renderer->camera.y = (-561 + SCREEN_HEIGHT)*SCREEN_SIZE;
 
 
-	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
 	//ANIMATIONS
 	float speed = 0.06f;
