@@ -201,6 +201,7 @@ bool ModuleSceneIntro::CleanUp()
 	LOG("Unloading Intro scene");
 	App->fonts->UnLoad(2);
 	App->fonts->UnLoad(1);
+	
 	App->textures->Unload(spritesheet);
 
 	//I DONT KNOW HOW TO DESTROY P2LIST OF PHYSBODIES

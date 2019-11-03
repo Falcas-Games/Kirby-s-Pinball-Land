@@ -520,7 +520,7 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 }
 
 
-void ModulePhysics::MoveBumper(int bumper_num, bool move_up) {
+void ModulePhysics::MoveBumper(int bumper_num, bool move_up) { //how we move the bumpers
 	if (bumper_num == 1) {
 		if (move_up==true) {
 			if (bumper_joint_left->GetJointAngle() == (-45 * DEGTORAD)) bumper_joint_left->SetMotorSpeed(0);
