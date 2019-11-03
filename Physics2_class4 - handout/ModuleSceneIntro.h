@@ -46,6 +46,7 @@ public:
 	bool demon_check = false;
 	bool left_casper_check = false;
 	bool right_casper_check = false;
+	bool destroy_caspers = false;
 
 	SDL_Texture* spritesheet;
 	

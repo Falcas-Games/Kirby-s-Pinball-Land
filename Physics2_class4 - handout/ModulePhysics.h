@@ -57,7 +57,8 @@ private:
 
 	bool debug;
 	bool want_to_destroy;
-	PhysBody* body_to_destroy;
+	PhysBody* body_to_destroy[3];
+	int number_to_destroy;
 	b2World* world;
 	b2MouseJoint* mouse_joint;
 	b2RevoluteJoint* bumper_joint_left;

@@ -218,6 +218,15 @@ update_status ModuleSceneIntro::Update()
 		p_demon = App->physics->CreateCircle(81, 351, 9);
 		p_demon->listener = this;
 	}
+	if (destroy_caspers == true) {
+		p_casper1 = App->physics->CreateCircle(23, 332, 8);
+		p_casper1->listener = this;
+		p_casper1->body->SetType(b2_kinematicBody);
+		p_casper2 = App->physics->CreateCircle(118, 332, 8);
+		p_casper2->listener = this;
+		p_casper2->body->SetType(b2_kinematicBody);
+		destroy_caspers = false;
+	}
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ray_on = !ray_on;
@@ -361,6 +370,9 @@ update_status ModuleSceneIntro::Update()
 			scarfy_number = 0;
 			if (p_demon != NULL)App->physics->DestroyBody(p_demon);
 			score_demon_not_visible = App->player->score;
+			App->physics->DestroyBody(p_casper1);
+			App->physics->DestroyBody(p_casper2);
+			destroy_caspers = true;
 			demon_not_visible = true;
 		}
 		App->player->level++;

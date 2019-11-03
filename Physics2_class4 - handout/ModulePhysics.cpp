@@ -178,6 +178,7 @@ bool ModulePhysics::Start()
 	fixture.shape = &box;
 	fixture.filter.groupIndex = -1;
 
+	number_to_destroy = 0;
 	b2->CreateFixture(&fixture);
 
 
@@ -427,8 +428,9 @@ update_status ModulePhysics::PostUpdate()
 		body_contact = nullptr;
 	}
 	if (want_to_destroy == true) {
-		world->DestroyBody(body_to_destroy->body);
+		for(int i=0;i<number_to_destroy;i++)world->DestroyBody(body_to_destroy[i]->body);
 		want_to_destroy = false;
+		number_to_destroy = 0;
 	}
 	return UPDATE_CONTINUE;
 }
@@ -440,6 +442,9 @@ bool ModulePhysics::CleanUp()
 	LOG("Destroying physics world");
 
 	// Delete the whole physics world!
+	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext()) {
+		world->DestroyBody(b);
+	}
 	delete world;
 
 	return true;
@@ -557,5 +562,6 @@ void ModulePhysics::MoveBumper(int bumper_num, bool move_up) { //how we move the
 
 void ModulePhysics::DestroyBody(PhysBody* body) {
 	want_to_destroy = true;
-	body_to_destroy = body;
+	body_to_destroy[number_to_destroy] = body;
+	number_to_destroy++;
 }
