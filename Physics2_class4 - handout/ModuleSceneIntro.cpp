@@ -149,6 +149,7 @@ bool ModuleSceneIntro::Start()
 
 	ball=App->physics->CreateCircle(50, 50, 7);
 	ball->listener = this;
+	ball->body->SetType(b2_dynamicBody);
 	p_porcupine = App->physics->CreateCircle(32, 320, 7);
 	p_porcupine->listener = this;
 
