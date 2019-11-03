@@ -445,6 +445,8 @@ update_status ModuleSceneIntro::Update()
 		j = 0;
 		for (int i = App->player->top_score; i > 10; i *= 0.1)j++;
 		App->fonts->BlitText(152 - (8 * j), 287, 2, score_text, 0);
+		rect = { 348,323,11,11 };
+		for (int i = App->player->lives; i > 0; i--) App->renderer->Blit(spritesheet, (i - 1) * 11, 287, &rect);
 	}
 	else if (App->player->level == 4) {
 		if (App->player->top_score < App->player->score)App->player->top_score = App->player->score;
@@ -457,6 +459,8 @@ update_status ModuleSceneIntro::Update()
 		j = 0;
 		for (int i = App->player->top_score; i > 10; i *= 0.1)j++;
 		App->fonts->BlitText(152-(8*j), 424, 2, score_text, 0);
+		rect = { 348,323,11,11 };
+		for (int i = App->player->lives; i > 0; i--) App->renderer->Blit(spritesheet, (i - 1) * 11, 424, &rect);
 	}
 	return UPDATE_CONTINUE;
 }
