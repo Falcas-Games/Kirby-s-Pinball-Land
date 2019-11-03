@@ -32,7 +32,7 @@ bool ModuleSceneIntro::Start()
 	App->audio->LoadFx("pinball/music/bumper.wav");
 	App->audio->LoadFx("pinball/music/bar.wav");
 
-	App->fonts->Load("pinball/fonts.png", "0123456789", 1, 9, 6, 10);
+	App->fonts->Load("pinball/fonts.png", "0123456789", 1, 6, 9, 10);
 
 	App->renderer->camera.x = 0;
 	App->renderer->camera.y = (-424 + SCREEN_HEIGHT)*SCREEN_SIZE;
@@ -365,24 +365,24 @@ update_status ModuleSceneIntro::Update()
 		if (y_casper >= 300) {
 			x_casper-=0.5f;
 			x_casper2 -= 0.5f;
-			p_casper1->body->SetLinearVelocity({ -0.6f,0.0f });
-			p_casper2->body->SetLinearVelocity({ -0.6f,0.0f });
+			p_casper1->body->SetLinearVelocity({ -0.55f,0.0f });
+			p_casper2->body->SetLinearVelocity({ -0.55f,0.0f });
 		}
 	}
 	if (x_casper <= 12) {
 		if (y_casper >= 300) {
 			y_casper -= 0.5f;
 			y_casper2 -= 0.5f;
-			p_casper1->body->SetLinearVelocity({ 0.0f,-0.6f });
-			p_casper2->body->SetLinearVelocity({ 0.0f,-0.6f });
+			p_casper1->body->SetLinearVelocity({ 0.0f,-0.55f });
+			p_casper2->body->SetLinearVelocity({ 0.0f,-0.55f });
 		}
 	}
 	if (y_casper <= 300) {
 		if (x_casper <= 38) {
 			x_casper += 0.5f;
 			x_casper2 += 0.5f;
-			p_casper1->body->SetLinearVelocity({ 0.6f,0.0f });
-			p_casper2->body->SetLinearVelocity({ 0.6f,0.0f });
+			p_casper1->body->SetLinearVelocity({ 0.55f,0.0f });
+			p_casper2->body->SetLinearVelocity({ 0.55f,0.0f });
 		}
 	}
 	if (x_casper >= 38) {
@@ -390,8 +390,8 @@ update_status ModuleSceneIntro::Update()
 			doing_cicle = false;
 			y_casper += 0.5f;
 			y_casper2 += 0.5f;
-			p_casper1->body->SetLinearVelocity({ 0.0f,0.6f });
-			p_casper2->body->SetLinearVelocity({ 0.0f,0.6f });
+			p_casper1->body->SetLinearVelocity({ 0.0f,0.55f });
+			p_casper2->body->SetLinearVelocity({ 0.0f,0.55f });
 		}
 		else {
 			doing_cicle = true;
@@ -415,6 +415,16 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->camera.y += SCREEN_HEIGHT * SCREEN_SIZE;
 		App->player->level--;
 	}
+
+	if (left_bar_check == true) 
+		App->fonts->BlitText(44, 383, 1, "50",1);
+	if (right_bar_check == true) 
+		App->fonts->BlitText(120, 382, 1, "50",1);
+	if (left_porcupine_check == true)
+		App->fonts->BlitText(37, 320,1, "240", 1);
+	if(right_porcupine_check==true)
+		App->fonts->BlitText(134, 320, 1, "240", 1);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -427,16 +437,27 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}
 	if (bodyA == item->data || bodyB == item->data) { // if the object is the left bar
 		App->audio->PlayFx(2);
-		App->fonts->BlitText(44, 383, 1, "50");
+		left_bar_check = true;
 	}
+	else left_bar_check = false;
 	item = item->next;
 
 	if (bodyA == item->data || bodyB == item->data) { //if the object is the right bar
 		App->audio->PlayFx(2);
-		App->fonts->BlitText(120, 382, 1, "50");
+		right_bar_check = true;
 	}
+	else right_bar_check = false;
 
-
+	if (bodyA == p_porcupine1 || bodyB == p_porcupine1) {
+		left_porcupine_check = true;
+		//sound
+	}
+	else left_porcupine_check = false;
+	if (bodyA == p_porcupine2 || bodyB == p_porcupine2) {
+		right_porcupine_check = true;
+		//sound
+	}
+	else right_porcupine_check == false;
 
 	
 

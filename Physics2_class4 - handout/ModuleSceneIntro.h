@@ -36,6 +36,10 @@ public:
 	PhysBody* p_demon;
 	bool sensed;
 
+	bool right_bar_check = false;
+	bool left_bar_check = false;
+	bool left_porcupine_check = false;
+	bool right_porcupine_check = false;
 	
 	uint bonus_fx;
 	p2Point<int> ray;
