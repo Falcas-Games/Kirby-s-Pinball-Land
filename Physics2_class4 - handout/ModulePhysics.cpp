@@ -321,8 +321,17 @@ update_status ModulePhysics::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
 
-	if (!debug)
+	if (!debug) {
+		if (want_to_destroy == true) {
+			for (int i = 0; i < number_to_destroy; i++) {
+				world->DestroyBody(body_to_destroy[i]->body);
+				body_to_destroy[i] = NULL;
+			}
+			want_to_destroy = false;
+			number_to_destroy = 0;
+		}
 		return UPDATE_CONTINUE;
+	}
 
 	// Bonus code: this will iterate all objects in the world and draw the circles
 	// You need to provide your own macro to translate meters to pixels
@@ -428,7 +437,10 @@ update_status ModulePhysics::PostUpdate()
 		body_contact = nullptr;
 	}
 	if (want_to_destroy == true) {
-		for(int i=0;i<number_to_destroy;i++)world->DestroyBody(body_to_destroy[i]->body);
+		for (int i = 0; i < number_to_destroy; i++) {
+			world->DestroyBody(body_to_destroy[i]->body);
+			body_to_destroy[i] = NULL;
+		}
 		want_to_destroy = false;
 		number_to_destroy = 0;
 	}
