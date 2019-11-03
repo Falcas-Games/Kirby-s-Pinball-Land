@@ -57,7 +57,7 @@ bool ModulePhysics::Start()
 	b2Vec2 vertices[5];
 	vertices[0].Set(PIXEL_TO_METERS(0), PIXEL_TO_METERS(0));
 	vertices[1].Set(PIXEL_TO_METERS(1), PIXEL_TO_METERS(8));
-	vertices[2].Set(PIXEL_TO_METERS(22), PIXEL_TO_METERS(9));
+	vertices[2].Set(PIXEL_TO_METERS(24), PIXEL_TO_METERS(9));
 	vertices[3].Set(PIXEL_TO_METERS(8), PIXEL_TO_METERS(1));
 	vertices[4].Set(PIXEL_TO_METERS(2), PIXEL_TO_METERS(0));
 	int32 count = 5;
@@ -69,7 +69,7 @@ bool ModulePhysics::Start()
 	b2FixtureDef fixture;
 	fixture.shape = &box;
 	fixture.filter.groupIndex = -1;
-	fixture.density = 1.0f;
+	fixture.density = 10.0f;
 
 	b->CreateFixture(&fixture);
 
@@ -116,7 +116,7 @@ bool ModulePhysics::Start()
 	//b2Vec2 vertices[5];
 	vertices[0].Set(PIXEL_TO_METERS(0), PIXEL_TO_METERS(0));
 	vertices[1].Set(PIXEL_TO_METERS(-1), PIXEL_TO_METERS(8));
-	vertices[2].Set(PIXEL_TO_METERS(-22), PIXEL_TO_METERS(9));
+	vertices[2].Set(PIXEL_TO_METERS(-24), PIXEL_TO_METERS(9));
 	vertices[3].Set(PIXEL_TO_METERS(-8), PIXEL_TO_METERS(1));
 	vertices[4].Set(PIXEL_TO_METERS(-2), PIXEL_TO_METERS(0));
 	box.Set(vertices, count);
@@ -125,7 +125,7 @@ bool ModulePhysics::Start()
 
 	fixture.shape = &box;
 	fixture.filter.groupIndex = -1;
-	fixture.density = 1.0f;
+	fixture.density = 10.0f;
 
 	b2->CreateFixture(&fixture);
 
