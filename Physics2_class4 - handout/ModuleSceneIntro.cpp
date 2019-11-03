@@ -150,6 +150,10 @@ bool ModuleSceneIntro::Start()
 	ball=App->physics->CreateCircle(50, 50, 7);
 	ball->listener = this;
 
+	kicker = App->physics->CreateRectangle(80, 530, 28, 10);
+	kicker->body->SetType(b2_staticBody);
+	kicker->listener = this;
+
 	return ret;
 }
 
@@ -305,7 +309,7 @@ update_status ModuleSceneIntro::Update()
 	//RENDER MAP
 	SDL_Rect rect;
 	int x, y;
-	rect = { 0,0,160,424 };
+	rect = { 0,0,160,564 };
 	App->renderer->DrawQuad(rect, 255, 255, 255, 255); //White Screen Behind
 	rect = { 2,2,160,424 };
 	App->renderer->Blit(spritesheet, 0, 0, &rect); //Map Rect
@@ -318,6 +322,9 @@ update_status ModuleSceneIntro::Update()
 	rect = { 272,395,14,14 };
 	ball->GetPosition(x, y);
 	App->renderer->Blit(spritesheet, x, y, &rect); //Right Bumper
+	rect = { 308,407,28,15 };
+	kicker->GetPosition(x, y);
+	App->renderer->Blit(spritesheet, x, y, &rect);
 
 	///if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)App->renderer->camera.y++;
 	//else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)App->renderer->camera.y--;
