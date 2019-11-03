@@ -25,13 +25,16 @@ bool ModuleSceneIntro::Start()
 
 	spritesheet = App->textures->Load("pinball/spritesheet.png");
 
+	App->audio->PlayMusic("pinball/music/music.ogg");
+	App->audio->LoadFx("pinball/music/bumper.wav");
+	App->audio->LoadFx("pinball/music/bar.wav");
+
 	App->renderer->camera.x = 0;
 	App->renderer->camera.y = (-424 + SCREEN_HEIGHT)*SCREEN_SIZE;
 
 	circle = App->textures->Load("pinball/wheel.png");
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/rick_head.png");
-	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 	float speed = 0.06f;
@@ -318,9 +321,16 @@ update_status ModuleSceneIntro::Update()
 
 	///if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)App->renderer->camera.y++;
 	//else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)App->renderer->camera.y--;
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) App->physics->MoveBumper(1, true);
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		App->physics->MoveBumper(1, true);
+		App->audio->PlayFx(1);
+	}
 	else App->physics->MoveBumper(1, false);
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) App->physics->MoveBumper(2, true);
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		App->physics->MoveBumper(2, true);
+		App->audio->PlayFx(1);
+	}
 	else App->physics->MoveBumper(2, false);
 	//movement casper
 	if (x_casper >= 12 && doing_cicle) {
@@ -363,16 +373,16 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
 	p2List_item<PhysBody*>* item = walls.getFirst();
-	for (int i = 0; i < 4; i++) {
+	/*for (int i = 0; i < 4; i++) {
 		item = item->next;
-	}
+	}*/
 	if (bodyA == item->data || bodyB == item->data) { // if the object is the left bar
-		App->audio->PlayFx(bonus_fx);
+		App->audio->PlayFx(2);
 	}
 	item = item->next;
 
 	if (bodyA == item->data || bodyB == item->data) { //if the object is the right bar
-		App->audio->PlayFx(bonus_fx);
+		App->audio->PlayFx(2);
 	}
 
 
