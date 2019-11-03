@@ -354,6 +354,7 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(spritesheet, x_casper, y_casper, &casper.GetCurrentFrame());
 	App->renderer->Blit(spritesheet, x_casper2, y_casper2, &casper.GetCurrentFrame());
 	App->renderer->Blit(spritesheet, 71, 342, &demon.GetCurrentFrame());
+	
 
 	return UPDATE_CONTINUE;
 }
@@ -361,8 +362,19 @@ update_status ModuleSceneIntro::Update()
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
+	p2List_item<PhysBody*>* item = walls.getFirst();
+	/*for (int i = 0; i < 5; i++) {
+		item = item->next;
+	}*/
+	PhysBody p;
+	if (bodyA == item->data || bodyB == item->data) {
+		App->audio->PlayFx(bonus_fx);
+	}
 
-	App->audio->PlayFx(bonus_fx);
+
+
+	
+
 
 	/*
 	if(bodyA)
