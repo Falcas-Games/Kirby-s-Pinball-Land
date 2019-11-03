@@ -40,4 +40,14 @@ https://github.com/Falcas-Games/Kirby-s-Pinball-Land
 https://arcadespot.com/game/kirbys-pinball-land/
 
 ## Differences with the original game
+* We just have 1 level.
+* Each level has 4 camera changes, we just have 2.
+* The movement of the ghost is drawing a rectangle instead of drawing a circle.
+* We change the jugability of the demon. we made it simple.
+* The element next to bar is disabled.
+* Few jugability items are disabled.
+* Starting animations (we made it simple).
+* Font of the puntuation.
+* UI position elements changed
+
 
