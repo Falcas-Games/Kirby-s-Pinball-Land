@@ -289,7 +289,6 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size, bool n
 // 
 update_status ModulePhysics::PostUpdate()
 {
-	App->renderer->DrawLine(bumper_joint_left->GetAnchorA().x, bumper_joint_left->GetAnchorA().y, bumper_joint_left->GetAnchorB().x, bumper_joint_left->GetAnchorB().y, 255, 255, 255);
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
 
