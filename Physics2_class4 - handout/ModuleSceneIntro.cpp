@@ -11,7 +11,6 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	circle = box = rick = NULL;
 	ray_on = false;
 	sensed = false;
 }
@@ -25,8 +24,10 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	//Spritesheet loading
 	spritesheet = App->textures->Load("pinball/spritesheet.png");
 
+	//fx loading
 	App->audio->PlayMusic("pinball/music/music.ogg");
 	App->audio->LoadFx("pinball/music/bumper.wav");
 	App->audio->LoadFx("pinball/music/bar.wav");
@@ -34,18 +35,18 @@ bool ModuleSceneIntro::Start()
 	App->audio->LoadFx("pinball/music/demon.wav");
 	App->audio->LoadFx("pinball/music/ghost.wav");
 
-
+	//fonts loading
 	App->fonts->Load("pinball/fonts.png", "0123456789", 1, 6, 9, 10);
 	App->fonts->Load("pinball/fonts2.png", "0123456789", 1, 8, 7, 10);
 
+	//set camera position
 	App->renderer->camera.x = 0;
 	App->renderer->camera.y = (-561 + SCREEN_HEIGHT)*SCREEN_SIZE;
 
-	circle = App->textures->Load("pinball/wheel.png");
-	box = App->textures->Load("pinball/crate.png");
-	rick = App->textures->Load("pinball/rick_head.png");
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
+
+	//ANIMATIONS
 	float speed = 0.06f;
 	porcupine.PushBack({ 165,304,16,16 },speed);
 	porcupine.PushBack({ 184,304,16,16 },speed);
@@ -69,7 +70,7 @@ bool ModuleSceneIntro::Start()
 	casper_dead.PushBack({ 325,323,14,15 },speed);
 	casper_dead.loop = true;
 
-
+	//limits of the map
 	int spritesheet_1[40] = {
 		41, 433,
 		3, 424,
@@ -143,7 +144,7 @@ bool ModuleSceneIntro::Start()
 		121, 383
 	};
 
-
+	//puting it in the list
 	walls.add(App->physics->CreateChain(-2,-2, spritesheet_1, 40, true));
 	walls.add(App->physics->CreateChain(-2, -2, spritesheet_2, 44, true));
 	walls.add(App->physics->CreateChain(-2, -2, spritesheet_3, 12, true));
@@ -151,36 +152,41 @@ bool ModuleSceneIntro::Start()
 	walls.add(App->physics->CreateChain(-2, -2, spritesheet_5, 8, true));
 	walls.add(App->physics->CreateChain(-2, -2, spritesheet_6, 8, true));
 
-
+	//creating the ball
 	ball=App->physics->CreateCircle(85, 530, 7);
 	ball->listener = this;
 	ball->body->SetType(b2_dynamicBody);
 
+	//creating the physbody of the porcupine
 	p_porcupine1 = App->physics->CreateCircle(32, 320, 7);
 	p_porcupine1->listener = this;
 
+	//creating the physbody of the porcupine
 	p_porcupine2 = App->physics->CreateCircle(127, 320, 7);
 	p_porcupine2->listener = this;
 
+	//set demon not visible
 	demon_not_visible = true;
 	score_demon_not_visible = 0;
 	p_demon = NULL;
 
+	//creating the physbody of the casper
 	p_casper1 = App->physics->CreateCircle(23, 332, 8);
 	p_casper1->listener = this;
 	p_casper1->body->SetType (b2_kinematicBody);
 
+	//creating the physbody of the casper
 	p_casper2 = App->physics->CreateCircle(118, 332, 8);
 	p_casper2->listener = this;
 	p_casper2->body->SetType(b2_kinematicBody);
 
 
-
+	//creating the physbody of the kicker
 	kicker = App->physics->CreateRectangle(80, 530, 28, 10, true);
 	kicker->body->SetType(b2_kinematicBody);
 	kicker->listener = this;
 
-
+	//letters we use to combo
 	for (int i = 0; i < 7; i++)scarfy[i] = { 164 + (50 * i),363,47,11 };
 	scarfy_number = 0;
 
@@ -195,9 +201,6 @@ bool ModuleSceneIntro::CleanUp()
 	LOG("Unloading Intro scene");
 	App->fonts->UnLoad(2);
 	App->fonts->UnLoad(1);
-	App->textures->Unload(circle);
-	App->textures->Unload(box);
-	App->textures->Unload(rick);
 	App->textures->Unload(spritesheet);
 
 	//I DONT KNOW HOW TO DESTROY P2LIST OF PHYSBODIES
@@ -286,50 +289,10 @@ update_status ModuleSceneIntro::Update()
 	// All draw functions ------------------------------------------------------
 	p2List_item<PhysBody*>* c = circles.getFirst();
 
-	while (c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		if (c->data->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
-			App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
-	}
 
-	c = boxes.getFirst();
-
-	while (c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
-		if (ray_on)
-		{
-			int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
-			if (hit >= 0)
-				ray_hit = hit;
-		}
-		c = c->next;
-	}
-
-	c = ricks.getFirst();
-
-	while (c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
-	}
 
 	c = walls.getFirst();
 
-	while (c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
-	}
 
 	// ray -----------------
 	if (ray_on == true)
