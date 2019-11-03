@@ -51,6 +51,7 @@ update_status ModulePlayer::Update()
 		if (top_score < score)top_score = score;
 		score = 0;
 		live_losed = dead = false;
+		lives = 3;
 	}
 	return UPDATE_CONTINUE;
 }
