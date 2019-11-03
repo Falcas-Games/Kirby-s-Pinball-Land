@@ -33,10 +33,11 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	int x, y;
+	int x, y, y2;
 	App->scene_intro->kicker->GetPosition(x, y);
-	if (live_losed == false) {
-		if (level == 4 && (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)) {
+	App->scene_intro->ball->GetPosition(x, y2);
+	if (dead == false) {
+		if (level == 4&& y2>=500&&(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)) {
 			if (y >= 430)App->scene_intro->kicker->body->SetLinearVelocity({ 0.0f,-10.0f });
 			else App->scene_intro->kicker->body->SetLinearVelocity({ 0.0f,0.0f });
 		}
@@ -46,11 +47,9 @@ update_status ModulePlayer::Update()
 		}
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-		if (dead == true) {
-			last_score = score;
-			if (top_score < score)top_score = score;
-			score = 0;
-		}
+		last_score = score;
+		if (top_score < score)top_score = score;
+		score = 0;
 		live_losed = dead = false;
 	}
 	return UPDATE_CONTINUE;
