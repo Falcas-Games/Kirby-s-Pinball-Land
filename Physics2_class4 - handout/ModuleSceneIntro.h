@@ -27,6 +27,10 @@ public:
 	PhysBody* bumper_right;
 	PhysBody* ball;
 	PhysBody* sensor;
+	PhysBody* p_porcupine;
+	PhysBody* p_casper1;
+	PhysBody* p_casper2;
+	PhysBody* p_demon;
 	bool sensed;
 
 	SDL_Texture* circle;

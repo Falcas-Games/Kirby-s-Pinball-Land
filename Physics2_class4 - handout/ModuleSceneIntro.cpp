@@ -149,6 +149,8 @@ bool ModuleSceneIntro::Start()
 
 	ball=App->physics->CreateCircle(50, 50, 7);
 	ball->listener = this;
+	p_porcupine = App->physics->CreateCircle(32, 320, 7);
+	p_porcupine->listener = this;
 
 	return ret;
 }
@@ -373,9 +375,9 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
 	p2List_item<PhysBody*>* item = walls.getFirst();
-	/*for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++) {
 		item = item->next;
-	}*/
+	}
 	if (bodyA == item->data || bodyB == item->data) { // if the object is the left bar
 		App->audio->PlayFx(2);
 	}
