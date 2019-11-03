@@ -27,6 +27,7 @@ bool ModuleSceneIntro::Start()
 
 	App->audio->PlayMusic("pinball/music/music.ogg");
 	App->audio->LoadFx("pinball/music/bumper.wav");
+	App->audio->LoadFx("pinball/music/bar.wav");
 
 	App->renderer->camera.x = 0;
 	App->renderer->camera.y = (-424 + SCREEN_HEIGHT)*SCREEN_SIZE;
@@ -34,7 +35,6 @@ bool ModuleSceneIntro::Start()
 	circle = App->textures->Load("pinball/wheel.png");
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/rick_head.png");
-	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 	float speed = 0.06f;
@@ -373,16 +373,16 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
 	p2List_item<PhysBody*>* item = walls.getFirst();
-	for (int i = 0; i < 4; i++) {
+	/*for (int i = 0; i < 4; i++) {
 		item = item->next;
-	}
+	}*/
 	if (bodyA == item->data || bodyB == item->data) { // if the object is the left bar
-		App->audio->PlayFx(bonus_fx);
+		App->audio->PlayFx(2);
 	}
 	item = item->next;
 
 	if (bodyA == item->data || bodyB == item->data) { //if the object is the right bar
-		App->audio->PlayFx(bonus_fx);
+		App->audio->PlayFx(2);
 	}
 
 
