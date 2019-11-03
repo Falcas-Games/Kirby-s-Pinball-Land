@@ -105,6 +105,5 @@ void ModuleFonts::BlitText(int x, int y, int font_id, const char* text, int spac
 			}
 			if (j > font->row_chars) { break; }
 		}
-		// TODO 2: Find the character in the table and its position in the texture, then Blit
 	}
 }
