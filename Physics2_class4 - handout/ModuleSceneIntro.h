@@ -49,10 +49,6 @@ public:
 	bool left_casper_check = false;
 	bool right_casper_check = false;
 
-
-	SDL_Texture* circle;
-	SDL_Texture* box;
-	SDL_Texture* rick;
 	SDL_Texture* spritesheet;
 	
 	uint bonus_fx;
