@@ -33,6 +33,7 @@ bool ModuleSceneIntro::Start()
 	App->audio->LoadFx("pinball/music/bar.wav");
 
 	App->fonts->Load("pinball/fonts.png", "0123456789", 1, 6, 9, 10);
+	App->fonts->Load("pinball/fonts2.png", "0123456789", 1, 8, 7, 10);
 
 	App->renderer->camera.x = 0;
 	App->renderer->camera.y = (-561 + SCREEN_HEIGHT)*SCREEN_SIZE;
@@ -184,7 +185,8 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
-
+	App->fonts->UnLoad(2);
+	App->fonts->UnLoad(1);
 	App->textures->Unload(circle);
 	App->textures->Unload(box);
 	App->textures->Unload(rick);
@@ -421,15 +423,29 @@ update_status ModuleSceneIntro::Update()
 		App->player->level--;
 	}
 
-	if (left_bar_check == true) 
+	if (left_bar_check == true)
 		App->fonts->BlitText(44, 383, 1, "50",1);
-	if (right_bar_check == true) 
+	if (right_bar_check == true)
 		App->fonts->BlitText(120, 382, 1, "50",1);
 	if (left_porcupine_check == true)
-		App->fonts->BlitText(37, 320,1, "240", 1);
-	if(right_porcupine_check==true)
+		App->fonts->BlitText(37, 320, 1, "240", 1);
+	if (right_porcupine_check == true)
 		App->fonts->BlitText(134, 320, 1, "240", 1);
 
+	if (App->player->level == 3) {
+		if (App->player->top_score < App->player->score)App->player->top_score = App->player->score;
+		sprintf_s(score_text, 10, "%7d", App->player->score);
+		App->fonts->BlitText(0, 415, 2, score_text, 1);
+		sprintf_s(score_text, 10, "%7d", App->player->top_score);
+		App->fonts->BlitText(0, 290, 2, score_text, 1);
+	}
+	else if (App->player->level == 4) {
+		if (App->player->top_score < App->player->score)App->player->top_score = App->player->score;
+		sprintf_s(score_text, 10, "%7d", App->player->score);
+		App->fonts->BlitText(0, 552, 2, score_text, 1);
+		sprintf_s(score_text, 10, "%7d", App->player->top_score);
+		App->fonts->BlitText(0, 427, 2, score_text, 1);
+	}
 	return UPDATE_CONTINUE;
 }
 
@@ -442,6 +458,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}
 	if (bodyA == item->data || bodyB == item->data) { // if the object is the left bar
 		App->audio->PlayFx(2);
+		App->player->score += 50;
 		left_bar_check = true;
 	}
 	else left_bar_check = false;
@@ -449,20 +466,23 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	if (bodyA == item->data || bodyB == item->data) { //if the object is the right bar
 		App->audio->PlayFx(2);
+		App->player->score += 50;
 		right_bar_check = true;
 	}
 	else right_bar_check = false;
 
 	if (bodyA == p_porcupine1 || bodyB == p_porcupine1) {
 		left_porcupine_check = true;
+		App->player->score += 240;
 		//sound
 	}
 	else left_porcupine_check = false;
 	if (bodyA == p_porcupine2 || bodyB == p_porcupine2) {
 		right_porcupine_check = true;
+		App->player->score += 240;
 		//sound
 	}
-	else right_porcupine_check == false;
+	else right_porcupine_check = false;
 
 	
 

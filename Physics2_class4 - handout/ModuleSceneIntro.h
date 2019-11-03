@@ -67,6 +67,8 @@ public:
 
 	bool doing_cicle = true;
 
+	char score_text[10];
+
 	// 300		35
 	// 326		
 

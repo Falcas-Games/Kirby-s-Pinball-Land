@@ -18,4 +18,7 @@ public:
 	int lives;
 	bool dead;
 	bool live_losed;
+	int score;
+	int last_score;
+	int top_score;
 };

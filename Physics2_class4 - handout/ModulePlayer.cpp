@@ -9,6 +9,7 @@ ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, s
 {
 	level = 4;
 	lives = 3;
+	score = top_score = last_score = 0;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -44,7 +45,14 @@ update_status ModulePlayer::Update()
 			else App->scene_intro->kicker->body->SetLinearVelocity({ 0.0f,0.0f });
 		}
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)live_losed = dead= false;
+	else if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+		if (dead == true) {
+			last_score = score;
+			if (top_score < score)top_score = score;
+			score = 0;
+		}
+		live_losed = dead = false;
+	}
 	return UPDATE_CONTINUE;
 }
 
