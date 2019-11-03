@@ -66,6 +66,9 @@ bool ModuleSceneIntro::Start()
 	demon.PushBack({ 208,341,20,19 },speed);
 	demon.loop = true;
 
+	casper_dead.PushBack({ 325,323,14,15 },speed);
+	casper_dead.loop = true;
+
 
 	int spritesheet_1[40] = {
 		41, 433,
@@ -180,6 +183,9 @@ bool ModuleSceneIntro::Start()
 
 	for (int i = 0; i < 7; i++)scarfy[i] = { 164 + (50 * i),363,47,11 };
 	scarfy_number = 0;
+
+	App->physics->CreateCircle(SCREEN_WIDTH / 2 - 1, 295, 1);
+
 	return ret;
 }
 
@@ -430,8 +436,7 @@ update_status ModuleSceneIntro::Update()
 		p_casper1->body->SetLinearVelocity({ 0.5f,0.5f });
 		p_casper2->body->SetLinearVelocity({ 0.5f,0.5f });
 	}
-	App->renderer->Blit(spritesheet, x_casper, y_casper, &casper.GetCurrentFrame());
-	App->renderer->Blit(spritesheet, x_casper2, y_casper2, &casper.GetCurrentFrame());
+
 	if(demon_not_visible==false) App->renderer->Blit(spritesheet, 71, 342, &demon.GetCurrentFrame());
 	
 
@@ -468,16 +473,27 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(spritesheet, 112, 378, &rect);
 		App->fonts->BlitText(120, 382, 1, "50", 1);
 	}
+
 	if (left_porcupine_check == true)
 		App->fonts->BlitText(37, 320, 1, "240", 1);
+
 	if (right_porcupine_check == true)
 		App->fonts->BlitText(134, 320, 1, "240", 1);
+
 	if(demon_check==true)
 		App->fonts->BlitText(92, 351, 1, "480", 1);
-	if(left_casper_check==true)
+
+	if (left_casper_check == true) {
 		App->fonts->BlitText(x_casper + 5, y_casper + 15, 1, "360", 1);
-	if(right_casper_check==true)
-		App->fonts->BlitText(x_casper2+5, y_casper2+15, 1, "360", 1);
+		App->renderer->Blit(spritesheet, x_casper, y_casper, &casper_dead.GetCurrentFrame());
+	}
+	else App->renderer->Blit(spritesheet, x_casper, y_casper, &casper.GetCurrentFrame());
+
+	if (right_casper_check == true) {
+		App->fonts->BlitText(x_casper2 + 5, y_casper2 + 15, 1, "360", 1);
+		App->renderer->Blit(spritesheet, x_casper2, y_casper2, &casper_dead.GetCurrentFrame());
+	}
+	else App->renderer->Blit(spritesheet, x_casper2, y_casper2, &casper.GetCurrentFrame());
 
 
 	int j = 0;
@@ -523,7 +539,6 @@ update_status ModuleSceneIntro::Update()
 			App->fonts->BlitText(SCREEN_WIDTH / 2 - 22, 558 - SCREEN_HEIGHT / 2, 2, score_text, 1);
 	}
 
-	App->physics->CreateCircle(SCREEN_WIDTH / 2 - 1, 295, 1);
 
 	return UPDATE_CONTINUE;
 }
