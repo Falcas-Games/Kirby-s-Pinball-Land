@@ -37,6 +37,8 @@ public:
 	PhysBody* p_demon;
 	SDL_Rect scarfy[7];
 	bool sensed;
+	bool demon_not_visible;
+	int score_demon_not_visible;
 	float scarfy_number;
 
 	bool right_bar_check = false;

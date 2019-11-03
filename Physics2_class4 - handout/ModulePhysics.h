@@ -46,6 +46,7 @@ public:
 	PhysBody* CreateRectangle(int x, int y, int width, int height, bool not_collide = false);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size, bool not_collide_bumpers=false);
+	void DestroyBody(PhysBody* body);
 
 	void MoveBumper(int bumper, bool move_up);
 
@@ -55,6 +56,8 @@ public:
 private:
 
 	bool debug;
+	bool want_to_destroy;
+	PhysBody* body_to_destroy;
 	b2World* world;
 	b2MouseJoint* mouse_joint;
 	b2RevoluteJoint* bumper_joint_left;
