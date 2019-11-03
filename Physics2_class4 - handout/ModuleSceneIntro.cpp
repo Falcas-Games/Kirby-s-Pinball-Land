@@ -431,6 +431,8 @@ update_status ModuleSceneIntro::Update()
 		App->fonts->BlitText(37, 320, 1, "240", 1);
 	if (right_porcupine_check == true)
 		App->fonts->BlitText(134, 320, 1, "240", 1);
+	if(demon_check==true)
+		App->fonts->BlitText(92, 351, 1, "480", 1);
 
 	if (App->player->level == 3) {
 		if (App->player->top_score < App->player->score)App->player->top_score = App->player->score;
@@ -477,6 +479,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		//sound
 	}
 	else left_porcupine_check = false;
+
 	if (bodyA == p_porcupine2 || bodyB == p_porcupine2) {
 		right_porcupine_check = true;
 		App->player->score += 240;
@@ -484,7 +487,10 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}
 	else right_porcupine_check = false;
 
-	
+	if (bodyA == p_demon || bodyB == p_demon) {
+		demon_check = true;
+	}
+	else demon_check = false;
 
 
 	/*
