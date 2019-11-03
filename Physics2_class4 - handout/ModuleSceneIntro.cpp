@@ -429,6 +429,8 @@ update_status ModuleSceneIntro::Update()
 		App->fonts->BlitText(37, 320,1, "240", 1);
 	if(right_porcupine_check==true)
 		App->fonts->BlitText(134, 320, 1, "240", 1);
+	if(demon_check==true)
+		App->fonts->BlitText(92, 351, 1, "480", 1);
 
 	return UPDATE_CONTINUE;
 }
@@ -458,13 +460,17 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		//sound
 	}
 	else left_porcupine_check = false;
+
 	if (bodyA == p_porcupine2 || bodyB == p_porcupine2) {
 		right_porcupine_check = true;
 		//sound
 	}
 	else right_porcupine_check == false;
 
-	
+	if (bodyA == p_demon || bodyB == p_demon) {
+		demon_check = true;
+	}
+	else demon_check = false;
 
 
 	/*
