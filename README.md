@@ -48,4 +48,6 @@ https://arcadespot.com/game/kirbys-pinball-land/
 * Few jugability items are disabled.
 * Starting animations (we made it simple).
 * Font of the puntuation.
-* 
+* UI position elements changed
+
+
