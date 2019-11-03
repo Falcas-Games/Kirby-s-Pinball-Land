@@ -442,9 +442,6 @@ bool ModulePhysics::CleanUp()
 	LOG("Destroying physics world");
 
 	// Delete the whole physics world!
-	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext()) {
-		world->DestroyBody(b);
-	}
 	delete world;
 
 	return true;

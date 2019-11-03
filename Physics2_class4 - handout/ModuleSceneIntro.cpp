@@ -219,10 +219,10 @@ update_status ModuleSceneIntro::Update()
 		p_demon->listener = this;
 	}
 	if (destroy_caspers == true) {
-		p_casper1 = App->physics->CreateCircle(23, 332, 8);
+		p_casper1 = App->physics->CreateCircle(x_casper, y_casper, 8);
 		p_casper1->listener = this;
 		p_casper1->body->SetType(b2_kinematicBody);
-		p_casper2 = App->physics->CreateCircle(118, 332, 8);
+		p_casper2 = App->physics->CreateCircle(x_casper2, y_casper2, 8);
 		p_casper2->listener = this;
 		p_casper2->body->SetType(b2_kinematicBody);
 		destroy_caspers = false;
