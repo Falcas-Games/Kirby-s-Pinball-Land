@@ -152,7 +152,7 @@ bool ModulePhysics::Start()
 	//create rectangles to avoid ball falling while dead
 
 	body.type = b2_staticBody;
-	body.position.Set(PIXEL_TO_METERS(36), PIXEL_TO_METERS(424));
+	body.position.Set(PIXEL_TO_METERS(36), PIXEL_TO_METERS(430));
 
 	b2 = world->CreateBody(&body);
 	vertices[1].Set(PIXEL_TO_METERS(35), PIXEL_TO_METERS(20));
@@ -167,7 +167,7 @@ bool ModulePhysics::Start()
 	b2->CreateFixture(&fixture);
 
 	body.type = b2_staticBody;
-	body.position.Set(PIXEL_TO_METERS(124), PIXEL_TO_METERS(424));
+	body.position.Set(PIXEL_TO_METERS(124), PIXEL_TO_METERS(430));
 
 	b2 = world->CreateBody(&body);
 	vertices[1].Set(PIXEL_TO_METERS(-35), PIXEL_TO_METERS(20));
