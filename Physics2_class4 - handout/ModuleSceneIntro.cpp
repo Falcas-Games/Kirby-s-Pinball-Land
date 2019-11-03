@@ -31,6 +31,7 @@ bool ModuleSceneIntro::Start()
 	App->audio->PlayMusic("pinball/music/music.ogg");
 	App->audio->LoadFx("pinball/music/bumper.wav");
 	App->audio->LoadFx("pinball/music/bar.wav");
+	App->audio->LoadFx("pinball/music/porcupine.wav");
 
 	App->fonts->Load("pinball/fonts.png", "0123456789", 1, 6, 9, 10);
 	App->fonts->Load("pinball/fonts2.png", "0123456789", 1, 8, 7, 10);
@@ -483,14 +484,14 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (bodyA == p_porcupine1 || bodyB == p_porcupine1) {
 		left_porcupine_check = true;
 		App->player->score += 240;
-		//sound
+		App->audio->PlayFx(3);
 	}
 	else left_porcupine_check = false;
 
 	if (bodyA == p_porcupine2 || bodyB == p_porcupine2) {
 		right_porcupine_check = true;
 		App->player->score += 240;
-		//sound
+		App->audio->PlayFx(3);
 	}
 	else right_porcupine_check = false;
 
