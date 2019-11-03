@@ -211,6 +211,7 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+	//control visibility of demon
 	if (demon_not_visible == true)p_demon = NULL;
 	if (demon_not_visible == false && p_demon == NULL) {
 		p_demon = App->physics->CreateCircle(81, 351, 9);
@@ -223,60 +224,6 @@ update_status ModuleSceneIntro::Update()
 		ray.y = App->input->GetMouseY();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 25));
-		circles.getLast()->data->listener = this;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50));
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	{
-		// Pivot 0, 0
-		int rick_head[64] = {
-			14, 36,
-			42, 40,
-			40, 0,
-			75, 30,
-			88, 4,
-			94, 39,
-			111, 36,
-			104, 58,
-			107, 62,
-			117, 67,
-			109, 73,
-			110, 85,
-			106, 91,
-			109, 99,
-			103, 104,
-			100, 115,
-			106, 121,
-			103, 125,
-			98, 126,
-			95, 137,
-			83, 147,
-			67, 147,
-			53, 140,
-			46, 132,
-			34, 136,
-			38, 126,
-			23, 123,
-			30, 114,
-			10, 102,
-			29, 90,
-			0, 75,
-			30, 62
-		};
-
-		ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64));
-	}
-
-	
-
 	// Prepare for raycast ------------------------------------------------------
 
 	iPoint mouse;
@@ -287,12 +234,7 @@ update_status ModuleSceneIntro::Update()
 	fVector normal(0.0f, 0.0f);
 
 	// All draw functions ------------------------------------------------------
-	p2List_item<PhysBody*>* c = circles.getFirst();
-
-
-
-	c = walls.getFirst();
-
+	p2List_item<PhysBody*>* c = walls.getFirst();
 
 	// ray -----------------
 	if (ray_on == true)
@@ -318,26 +260,27 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(spritesheet, 89, 406,&rect,1.0f,bumper_right->GetRotation(),86,18); //Right Bumper
 	rect = { 233,410,22,12 };
 	App->renderer->Blit(spritesheet, 49, 406, &rect, 1.0f, bumper_left->GetRotation(),22,18); //Left Bumper
-	App->renderer->Blit(spritesheet, 24, 312, &porcupine.GetCurrentFrame());
-	App->renderer->Blit(spritesheet, 119, 312, &porcupine.GetCurrentFrame());
+	App->renderer->Blit(spritesheet, 24, 312, &porcupine.GetCurrentFrame()); //Porcupine draw
+	App->renderer->Blit(spritesheet, 119, 312, &porcupine.GetCurrentFrame()); //porcupine 2 draw
 	rect = { 272,395,14,14 };
 	ball->GetPosition(x, y);
 	App->renderer->Blit(spritesheet, x, y, &rect); //Right Bumper
 	rect = { 308,407,28,15 };
 	kicker->GetPosition(x, y);
-	App->renderer->Blit(spritesheet, x, y, &rect);
+	App->renderer->Blit(spritesheet, x, y, &rect); //kicker draw
 
-	///if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)App->renderer->camera.y++;
-	//else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)App->renderer->camera.y--;
+	//BUMPERS MOVEMENT
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
 		App->physics->MoveBumper(1, true);
 	}
 	else App->physics->MoveBumper(1, false);
+
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		App->physics->MoveBumper(2, true);
 	}
 	else App->physics->MoveBumper(2, false);
+
 	//movement casper
 	if (x_casper >= 12 && doing_cicle) {
 		if (y_casper >= 300) {
@@ -400,14 +343,18 @@ update_status ModuleSceneIntro::Update()
 		p_casper2->body->SetLinearVelocity({ 0.5f,0.5f });
 	}
 
-	if(demon_not_visible==false) App->renderer->Blit(spritesheet, 71, 342, &demon.GetCurrentFrame());
+	if(demon_not_visible==false) 
+		App->renderer->Blit(spritesheet, 71, 342, &demon.GetCurrentFrame());
 	
-
+	//fx bumpers
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 		App->audio->PlayFx(1);
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 		App->audio->PlayFx(1);
+
 	ball->GetPosition(x,y);
+
+	//control of the letters to get the lives
 	if (y >= 424 && App->player->level != 4) {
 		App->renderer->camera.y -= SCREEN_HEIGHT*SCREEN_SIZE;
 		if (App->player->level == 3) {
@@ -426,6 +373,7 @@ update_status ModuleSceneIntro::Update()
 		App->player->level--;
 	}
 
+	//printing the score when colide each object
 	if (left_bar_check == true) {
 		rect = { 369,409,9,15 };
 		App->renderer->Blit(spritesheet, 39, 378, &rect);
@@ -458,39 +406,64 @@ update_status ModuleSceneIntro::Update()
 	}
 	else App->renderer->Blit(spritesheet, x_casper2, y_casper2, &casper.GetCurrentFrame());
 
-
+	//SCORE MANAGEMENT
 	int j = 0;
 	if (App->player->level == 3) {
 		App->renderer->Blit(spritesheet, 56, 332, &scarfy[(int)scarfy_number]);
-		if (App->player->top_score < App->player->score)App->player->top_score = App->player->score;
+
+		if (App->player->top_score < App->player->score)
+			App->player->top_score = App->player->score;
+
 		sprintf_s(score_text, 10, "%7d", App->player->score);
 		App->fonts->BlitText(0, 417, 2, score_text, 0);
 		sprintf_s(score_text, 10, "%7d", App->player->last_score);
-		for (int i = App->player->last_score; i > 10; i *= 0.1)j++;
+
+		for (int i = App->player->last_score; i > 10; i *= 0.1)
+			j++;
+
 		App->fonts->BlitText(152-(8*j), 417, 2, score_text, 0);
 		sprintf_s(score_text, 10, "%7d", App->player->top_score);
 		j = 0;
-		for (int i = App->player->top_score; i > 10; i *= 0.1)j++;
+
+		for (int i = App->player->top_score; i > 10; i *= 0.1)
+			j++;
+
 		App->fonts->BlitText(152 - (8 * j), 287, 2, score_text, 0);
 		rect = { 348,323,11,11 };
-		for (int i = App->player->lives; i > 0; i--) App->renderer->Blit(spritesheet, (i - 1) * 11, 287, &rect);
+
+		for (int i = App->player->lives; i > 0; i--) 
+			App->renderer->Blit(spritesheet, (i - 1) * 11, 287, &rect);
 	}
 	else if (App->player->level == 4) {
-		if (App->player->top_score < App->player->score)App->player->top_score = App->player->score;
+
+		if (App->player->top_score < App->player->score)
+			App->player->top_score = App->player->score;
+
 		sprintf_s(score_text, 10, "%7d", App->player->score);
 		App->fonts->BlitText(0, 554, 2, score_text, 0);
 		sprintf_s(score_text, 10, "%7d", App->player->last_score);
-		for (int i = App->player->last_score; i > 10; i *= 0.1)j++;
+
+		for (int i = App->player->last_score; i > 10; i *= 0.1)
+			j++;
+
 		App->fonts->BlitText(152-(8*j), 554, 2, score_text, 0);
 		sprintf_s(score_text, 10, "%7d", App->player->top_score);
+
 		j = 0;
-		for (int i = App->player->top_score; i > 10; i *= 0.1)j++;
+
+		for (int i = App->player->top_score; i > 10; i *= 0.1)
+			j++;
+
 		App->fonts->BlitText(152-(8*j), 424, 2, score_text, 0);
 		rect = { 348,323,11,11 };
-		for (int i = App->player->lives; i > 0; i--) App->renderer->Blit(spritesheet, (i - 1) * 11, 424, &rect);
-	}
-	if (demon_not_visible == true && score_demon_not_visible + 1000 <= App->player->score) demon_not_visible = false;
 
+		for (int i = App->player->lives; i > 0; i--) 
+			App->renderer->Blit(spritesheet, (i - 1) * 11, 424, &rect);
+	}
+	if (demon_not_visible == true && score_demon_not_visible + 1000 <= App->player->score)
+		demon_not_visible = false;
+
+	//What happens if player is dead
 	if (App->player->dead == true) {
 		sprintf_s(score_text, 10, "%7d", App->player->last_score);
 		if (App->player->last_score == 0)
@@ -501,7 +474,9 @@ update_status ModuleSceneIntro::Update()
 			App->fonts->BlitText(SCREEN_WIDTH / 2 - 18, 558 - SCREEN_HEIGHT / 2 - 50, 1, score_text, 1);
 		else
 			App->fonts->BlitText(SCREEN_WIDTH / 2 - 22, 558 - SCREEN_HEIGHT / 2 - 50, 1, score_text, 1);
+
 		sprintf_s(score_text, 10, "%7d", App->player->score);
+
 		if (App->player->score == 0)
 			App->fonts->BlitText(SCREEN_WIDTH / 2 - 4, 558 - SCREEN_HEIGHT / 2 - 20, 1, score_text, 1);
 		else if (App->player->score < 1000)
@@ -510,7 +485,9 @@ update_status ModuleSceneIntro::Update()
 			App->fonts->BlitText(SCREEN_WIDTH / 2 - 18, 558 - SCREEN_HEIGHT / 2 - 20, 1, score_text, 1);
 		else
 			App->fonts->BlitText(SCREEN_WIDTH / 2 - 22, 558 - SCREEN_HEIGHT / 2 - 20, 1, score_text, 1);
+
 		sprintf_s(score_text, 10, "%7d", App->player->top_score);
+
 		if (App->player->top_score == 0)
 			App->fonts->BlitText(SCREEN_WIDTH / 2 - 4, 558 - SCREEN_HEIGHT / 2 + 10, 1, score_text, 1);
 		else if (App->player->top_score < 1000)
@@ -527,6 +504,7 @@ update_status ModuleSceneIntro::Update()
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
+	//all collisions management
 	int x, y;
 	p2List_item<PhysBody*>* item = walls.getFirst();
 	for (int i = 0; i < 4; i++) {
@@ -547,21 +525,21 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}
 	else right_bar_check = false;
 
-	if (bodyA == p_porcupine1 || bodyB == p_porcupine1) {
+	if (bodyA == p_porcupine1 || bodyB == p_porcupine1) { //if the object is the left porcupine
 		left_porcupine_check = true;
 		App->player->score += 240;
 		App->audio->PlayFx(3);
 	}
 	else left_porcupine_check = false;
 
-	if (bodyA == p_porcupine2 || bodyB == p_porcupine2) {
+	if (bodyA == p_porcupine2 || bodyB == p_porcupine2) { //if the object is the right porcupine
 		right_porcupine_check = true;
 		App->player->score += 240;
 		App->audio->PlayFx(3);
 	}
 	else right_porcupine_check = false;
 
-	if ((bodyA == p_demon || bodyB == p_demon)&&p_demon!=NULL) {
+	if ((bodyA == p_demon || bodyB == p_demon)&&p_demon!=NULL) { //all logic when ball collides to demon
 		demon_check = true;
 		App->player->score += 480;
 		if (scarfy_number <= 6)scarfy_number+=0.5;
@@ -576,14 +554,14 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}
 	else demon_check = false;
 
-	if (bodyA == p_casper1 || bodyB == p_casper1) {
+	if (bodyA == p_casper1 || bodyB == p_casper1) { //if the object is the left casper
 		left_casper_check = true;
 		App->player->score += 360;
 		App->audio->PlayFx(4);
 	}
 	else left_casper_check = false;
 
-	if (bodyA == p_casper2 || bodyB == p_casper2) {
+	if (bodyA == p_casper2 || bodyB == p_casper2) { //if the object is the right casper
 		right_casper_check = true;
 		App->player->score += 360;
 		App->audio->PlayFx(4);
