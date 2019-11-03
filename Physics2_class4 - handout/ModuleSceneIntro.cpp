@@ -363,11 +363,15 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
 	p2List_item<PhysBody*>* item = walls.getFirst();
-	/*for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 4; i++) {
 		item = item->next;
-	}*/
-	PhysBody p;
-	if (bodyA == item->data || bodyB == item->data) {
+	}
+	if (bodyA == item->data || bodyB == item->data) { // if the object is the left bar
+		App->audio->PlayFx(bonus_fx);
+	}
+	item = item->next;
+
+	if (bodyA == item->data || bodyB == item->data) { //if the object is the right bar
 		App->audio->PlayFx(bonus_fx);
 	}
 
