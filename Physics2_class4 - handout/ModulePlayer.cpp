@@ -52,6 +52,7 @@ update_status ModulePlayer::Update()
 		score = 0;
 		live_losed = dead = false;
 		lives = 3;
+		App->scene_intro->score_demon_not_visible = 0;
 	}
 	return UPDATE_CONTINUE;
 }

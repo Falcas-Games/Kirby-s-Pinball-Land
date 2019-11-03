@@ -158,8 +158,9 @@ bool ModuleSceneIntro::Start()
 	p_porcupine2 = App->physics->CreateCircle(127, 320, 7);
 	p_porcupine2->listener = this;
 
-	p_demon = App->physics->CreateCircle(81, 351, 9);
-	p_demon->listener = this;
+	demon_not_visible = true;
+	score_demon_not_visible = 0;
+	p_demon = NULL;
 
 	p_casper1 = App->physics->CreateCircle(46, 332, 8);
 	p_casper1->listener = this;
@@ -200,6 +201,10 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+	if (demon_not_visible == false && p_demon == NULL) {
+		p_demon = App->physics->CreateCircle(81, 351, 9);
+		p_demon->listener = this;
+	}
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ray_on = !ray_on;
@@ -401,7 +406,7 @@ update_status ModuleSceneIntro::Update()
 	}
 	App->renderer->Blit(spritesheet, x_casper, y_casper, &casper.GetCurrentFrame());
 	App->renderer->Blit(spritesheet, x_casper2, y_casper2, &casper.GetCurrentFrame());
-	App->renderer->Blit(spritesheet, 71, 342, &demon.GetCurrentFrame());
+	if(demon_not_visible==false)App->renderer->Blit(spritesheet, 71, 342, &demon.GetCurrentFrame());
 	
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
@@ -415,6 +420,9 @@ update_status ModuleSceneIntro::Update()
 			App->player->lives--;
 			App->player->live_losed = true;
 			scarfy_number = 0;
+			App->physics->DestroyBody(p_demon);
+			score_demon_not_visible = App->player->score;
+			demon_not_visible = true;
 		}
 		App->player->level++;
 		if (App->player->lives == 0)App->player->dead = true;
@@ -470,6 +478,10 @@ update_status ModuleSceneIntro::Update()
 		rect = { 348,323,11,11 };
 		for (int i = App->player->lives; i > 0; i--) App->renderer->Blit(spritesheet, (i - 1) * 11, 424, &rect);
 	}
+	if (demon_not_visible == true && score_demon_not_visible + 1000 <= App->player->score) {
+		demon_not_visible = false;
+		p_demon = NULL;
+	}
 	return UPDATE_CONTINUE;
 }
 
@@ -509,11 +521,17 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}
 	else right_porcupine_check = false;
 
-	if (bodyA == p_demon || bodyB == p_demon) {
+	if ((bodyA == p_demon || bodyB == p_demon)&&p_demon!=NULL) {
 		demon_check = true;
 		App->player->score += 480;
 		if (scarfy_number <= 6)scarfy_number+=0.5;
-		else scarfy_number = 0;
+		else {
+			scarfy_number = 0;
+			App->player->lives++;
+			App->physics->DestroyBody(p_demon);
+			demon_not_visible = true;
+			score_demon_not_visible = App->player->score;
+		}
 		App->audio->PlayFx(4);
 	}
 	else demon_check = false;

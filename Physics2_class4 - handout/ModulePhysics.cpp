@@ -426,6 +426,10 @@ update_status ModulePhysics::PostUpdate()
 		mouse_joint = NULL;
 		body_contact = nullptr;
 	}
+	if (want_to_destroy == true) {
+		world->DestroyBody(body_to_destroy->body);
+		want_to_destroy = false;
+	}
 	return UPDATE_CONTINUE;
 }
 
@@ -549,4 +553,9 @@ void ModulePhysics::MoveBumper(int bumper_num, bool move_up) {
 			}
 		}
 	}
+}
+
+void ModulePhysics::DestroyBody(PhysBody* body) {
+	want_to_destroy = true;
+	body_to_destroy = body;
 }
