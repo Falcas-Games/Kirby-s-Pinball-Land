@@ -30,6 +30,8 @@ bool ModuleSceneIntro::Start()
 	App->audio->PlayMusic("pinball/music/music.ogg");
 	App->audio->LoadFx("pinball/music/bumper.wav");
 	App->audio->LoadFx("pinball/music/bar.wav");
+	App->audio->LoadFx("pinball/music/porcupine.wav");
+	App->audio->LoadFx("pinball/music/demon.wav");
 
 	App->fonts->Load("pinball/fonts.png", "0123456789", 1, 6, 9, 10);
 	App->fonts->Load("pinball/fonts2.png", "0123456789", 1, 8, 7, 10);
@@ -63,70 +65,67 @@ bool ModuleSceneIntro::Start()
 	demon.loop = true;
 
 
-	int spritesheet_1[46] = {
-		62, 293,
-		62, 314,
-		58, 320,
-		58, 306,
-		52, 298,
-		43, 296,
-		16, 297,
-		11, 302,
-		8, 310,
-		8, 335,
-		15, 344,
-		24, 353,
-		24, 366,
-		18, 370,
-		14, 377,
-		14, 384,
-		14, 409,
-		18, 414,
-		30, 421,
-		40, 425,
-		1, 426,
-		0, 286,
-		56, 292
+	int spritesheet_1[42] = {
+		41, 433,
+		3, 424,
+		1, 288,
+		2, 275,
+		60, 293,
+		61, 311,
+		59, 320,
+		57, 304,
+		48, 296,
+		26, 295,
+		18, 295,
+		12, 301,
+		8, 316,
+		9, 339,
+		23, 352,
+		23, 361,
+		19, 365,
+		12, 375,
+		13, 390,
+		12, 412,
+		39, 430
 	};
 	int spritesheet_2[44] = {
-		102, 293,
-		102, 312,
-		106, 320,
-		107, 307,
-		110, 300,
-		117, 297,
-		126, 296,
-		146, 296,
-		154, 302,
-		156, 315,
+		59, 293,
+		102, 295,
+		101, 311,
+		105, 320,
+		107, 305,
+		111, 298,
+		120, 295,
+		146, 295,
+		153, 301,
+		156, 310,
 		156, 334,
-		153, 339,
+		150, 344,
 		140, 353,
-		140, 367,
-		146, 370,
-		150, 376,
-		150, 408,
-		145, 417,
-		123, 425,
+		140, 360,
+		148, 370,
+		152, 379,
+		153, 410,
+		144, 420,
+		125, 438,
 		161, 425,
-		161, 287,
-		111, 293
+		160, 284,
+		59, 286
 	};
 	int spritesheet_3[12] = {
-		28, 380,
-		29, 399,
-		52, 410,
-		49, 414,
-		27, 403,
-		27, 380
+		28, 383,
+		29, 402,
+		49, 412,
+		51, 409,
+		30, 399,
+		28, 384
 	};
-	int spritesheet_4[12] = {
-		136, 379,
-		135, 399,
-		112, 410,
-		115, 414,
-		137, 402,
-		137, 379
+	int spritesheet_4[10] = {
+		114, 410,
+		135, 398,
+		136, 382,
+		136, 401,
+		115, 412
 	};
 	int spritesheet_5[8] = {
 		44, 383,
@@ -142,10 +141,10 @@ bool ModuleSceneIntro::Start()
 	};
 
 
-	walls.add(App->physics->CreateChain(-2,-2, spritesheet_1, 46, true));
+	walls.add(App->physics->CreateChain(-2,-2, spritesheet_1, 42, true));
 	walls.add(App->physics->CreateChain(-2, -2, spritesheet_2, 44, true));
 	walls.add(App->physics->CreateChain(-2, -2, spritesheet_3, 12, true));
-	walls.add(App->physics->CreateChain(-2, -2, spritesheet_4, 12, true));
+	walls.add(App->physics->CreateChain(-2, -2, spritesheet_4, 10, true));
 	walls.add(App->physics->CreateChain(-2, -2, spritesheet_5, 8, true));
 	walls.add(App->physics->CreateChain(-2, -2, spritesheet_6, 8, true));
 
@@ -500,14 +499,14 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (bodyA == p_porcupine1 || bodyB == p_porcupine1) {
 		left_porcupine_check = true;
 		App->player->score += 240;
-		//sound
+		App->audio->PlayFx(3);
 	}
 	else left_porcupine_check = false;
 
 	if (bodyA == p_porcupine2 || bodyB == p_porcupine2) {
 		right_porcupine_check = true;
 		App->player->score += 240;
-		//sound
+		App->audio->PlayFx(3);
 	}
 	else right_porcupine_check = false;
 
@@ -516,6 +515,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		App->player->score += 480;
 		if (scarfy_number <= 6)scarfy_number+=0.5;
 		else scarfy_number = 0;
+		App->audio->PlayFx(4);
 	}
 	else demon_check = false;
 
