@@ -14,7 +14,6 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	circle = box = rick = NULL;
 	ray_on = false;
 	sensed = false;
-	//level = 3;
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -178,6 +177,9 @@ bool ModuleSceneIntro::Start()
 	kicker->body->SetType(b2_kinematicBody);
 	kicker->listener = this;
 
+
+	for (int i = 0; i < 7; i++)scarfy[i] = { 164 + (50 * i),363,47,11 };
+	scarfy_number = 0;
 	return ret;
 }
 
@@ -414,6 +416,7 @@ update_status ModuleSceneIntro::Update()
 		if (App->player->level == 3) {
 			App->player->lives--;
 			App->player->live_losed = true;
+			scarfy_number = 0;
 		}
 		App->player->level++;
 		if (App->player->lives == 0)App->player->dead = true;
@@ -441,6 +444,7 @@ update_status ModuleSceneIntro::Update()
 		App->fonts->BlitText(92, 351, 1, "480", 1);
 	int j = 0;
 	if (App->player->level == 3) {
+		App->renderer->Blit(spritesheet, 56, 332, &scarfy[(int)scarfy_number]);
 		if (App->player->top_score < App->player->score)App->player->top_score = App->player->score;
 		sprintf_s(score_text, 10, "%7d", App->player->score);
 		App->fonts->BlitText(0, 417, 2, score_text, 0);
@@ -510,6 +514,8 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (bodyA == p_demon || bodyB == p_demon) {
 		demon_check = true;
 		App->player->score += 480;
+		if (scarfy_number <= 6)scarfy_number+=0.5;
+		else scarfy_number = 0;
 	}
 	else demon_check = false;
 
