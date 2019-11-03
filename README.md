@@ -43,9 +43,9 @@ https://arcadespot.com/game/kirbys-pinball-land/
 * We just have 1 level.
 * Each level has 4 camera changes, we just have 2.
 * The movement of the ghost is drawing a rectangle instead of drawing a circle.
-* We change the jugability of the demon. we made it simple.
+* We change the playability of the demon. we made it simple.
 * The element next to bar is disabled.
-* Few jugability items are disabled.
+* Few playability items are disabled.
 * Starting animations (we made it simple).
 * Font of the puntuation.
 * UI position elements changed
