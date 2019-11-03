@@ -406,7 +406,12 @@ update_status ModuleSceneIntro::Update()
 	ball->GetPosition(x,y);
 	if (y >= 424 && App->player->level != 4) {
 		App->renderer->camera.y -= SCREEN_HEIGHT*SCREEN_SIZE;
+		if (App->player->level == 3) {
+			App->player->lives--;
+			App->player->live_losed = true;
+		}
 		App->player->level++;
+		if (App->player->lives == 0)App->player->dead = true;
 	}
 	else if (y <= 424 && App->player->level == 4) {
 		App->renderer->camera.y += SCREEN_HEIGHT * SCREEN_SIZE;

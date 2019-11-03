@@ -34,14 +34,17 @@ update_status ModulePlayer::Update()
 {
 	int x, y;
 	App->scene_intro->kicker->GetPosition(x, y);
-	if (level == 4 && (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)) {
-		if (y >= 430)App->scene_intro->kicker->body->SetLinearVelocity({ 0.0f,-10.0f });
-		else App->scene_intro->kicker->body->SetLinearVelocity({ 0.0f,0.0f });
+	if (live_losed == false) {
+		if (level == 4 && (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)) {
+			if (y >= 430)App->scene_intro->kicker->body->SetLinearVelocity({ 0.0f,-10.0f });
+			else App->scene_intro->kicker->body->SetLinearVelocity({ 0.0f,0.0f });
+		}
+		else {
+			if (y <= 530)App->scene_intro->kicker->body->SetLinearVelocity({ 0.0f,10.0f });
+			else App->scene_intro->kicker->body->SetLinearVelocity({ 0.0f,0.0f });
+		}
 	}
-	else {
-		if (y <= 530)App->scene_intro->kicker->body->SetLinearVelocity({ 0.0f,10.0f });
-		else App->scene_intro->kicker->body->SetLinearVelocity({ 0.0f,0.0f });
-	}
+	else if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)live_losed = dead= false;
 	return UPDATE_CONTINUE;
 }
 
