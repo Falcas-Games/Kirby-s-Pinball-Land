@@ -26,6 +26,7 @@ bool ModuleSceneIntro::Start()
 	spritesheet = App->textures->Load("pinball/spritesheet.png");
 
 	App->audio->PlayMusic("pinball/music/music.ogg");
+	App->audio->LoadFx("pinball/music/bumper.wav");
 
 	App->renderer->camera.x = 0;
 	App->renderer->camera.y = (-424 + SCREEN_HEIGHT)*SCREEN_SIZE;
@@ -320,9 +321,16 @@ update_status ModuleSceneIntro::Update()
 
 	///if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)App->renderer->camera.y++;
 	//else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)App->renderer->camera.y--;
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) App->physics->MoveBumper(1, true);
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		App->physics->MoveBumper(1, true);
+		App->audio->PlayFx(1);
+	}
 	else App->physics->MoveBumper(1, false);
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) App->physics->MoveBumper(2, true);
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		App->physics->MoveBumper(2, true);
+		App->audio->PlayFx(1);
+	}
 	else App->physics->MoveBumper(2, false);
 	//movement casper
 	if (x_casper >= 12 && doing_cicle) {
