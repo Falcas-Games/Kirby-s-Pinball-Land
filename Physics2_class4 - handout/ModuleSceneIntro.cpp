@@ -149,8 +149,16 @@ bool ModuleSceneIntro::Start()
 
 	ball=App->physics->CreateCircle(50, 50, 7);
 	ball->listener = this;
-	p_porcupine = App->physics->CreateCircle(32, 320, 7);
-	p_porcupine->listener = this;
+	p_porcupine1 = App->physics->CreateCircle(32, 320, 7);
+	p_porcupine1->listener = this;
+	p_porcupine2 = App->physics->CreateCircle(127, 320, 7);
+	p_porcupine2->listener = this;
+	p_demon = App->physics->CreateCircle(81, 351, 9);
+	p_demon->listener = this;
+	p_casper1 = App->physics->CreateCircle(81, 351, 9);
+	p_casper1->listener = this;
+	p_casper2 = App->physics->CreateCircle(81, 351, 9);
+	p_casper2->listener = this;
 
 	kicker = App->physics->CreateRectangle(80, 530, 28, 10);
 	kicker->body->SetType(b2_staticBody);
@@ -333,12 +341,10 @@ update_status ModuleSceneIntro::Update()
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
 		App->physics->MoveBumper(1, true);
-		App->audio->PlayFx(1);
 	}
 	else App->physics->MoveBumper(1, false);
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		App->physics->MoveBumper(2, true);
-		App->audio->PlayFx(1);
 	}
 	else App->physics->MoveBumper(2, false);
 	//movement casper
@@ -374,6 +380,11 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(spritesheet, x_casper2, y_casper2, &casper.GetCurrentFrame());
 	App->renderer->Blit(spritesheet, 71, 342, &demon.GetCurrentFrame());
 	
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+		App->audio->PlayFx(1);
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+		App->audio->PlayFx(1);
 
 	return UPDATE_CONTINUE;
 }

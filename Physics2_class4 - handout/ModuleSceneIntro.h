@@ -28,7 +28,8 @@ public:
 	PhysBody* ball;
 	PhysBody* kicker;
 	PhysBody* sensor;
-	PhysBody* p_porcupine;
+	PhysBody* p_porcupine1;
+	PhysBody* p_porcupine2;
 	PhysBody* p_casper1;
 	PhysBody* p_casper2;
 	PhysBody* p_demon;
