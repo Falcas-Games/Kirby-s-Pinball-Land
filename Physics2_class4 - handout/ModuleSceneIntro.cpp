@@ -5,6 +5,7 @@
 #include "ModuleInput.h"
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
+#include "ModulePlayer.h"
 #include "ModulePhysics.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -392,7 +393,15 @@ update_status ModuleSceneIntro::Update()
 		App->audio->PlayFx(1);
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 		App->audio->PlayFx(1);
-
+	ball->GetPosition(x,y);
+	if (y >= 424 && App->player->level != 4) {
+		App->renderer->camera.y -= SCREEN_HEIGHT*SCREEN_SIZE;
+		App->player->level++;
+	}
+	else if (y <= 424 && App->player->level == 4) {
+		App->renderer->camera.y += SCREEN_HEIGHT * SCREEN_SIZE;
+		App->player->level--;
+	}
 	return UPDATE_CONTINUE;
 }
 

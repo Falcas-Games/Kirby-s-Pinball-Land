@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
+#include "ModulePlayer.h"
 
 #include "SDL\include\SDL.h"
 
@@ -61,7 +62,8 @@ update_status ModuleInput::PreUpdate()
 	Uint32 buttons = SDL_GetMouseState(&mouse_x, &mouse_y);
 	mouse_x /= SCREEN_SIZE;
 	mouse_y /= SCREEN_SIZE;
-	mouse_y += 287;// App->scene_intro->level;
+	if (App->player->level == 3) mouse_y += 287;// App->scene_intro->level;
+	else if (App->player->level == 4)mouse_y += 424;
 
 	for (int i = 0; i < MAX_MOUSE_BUTTONS; ++i)
 	{

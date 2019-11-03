@@ -52,6 +52,7 @@ public:
 	float x_casper2 = 133;
 	float y_casper2 = 326;
 
+
 	b2Vec2 vec;
 
 	bool doing_cicle = true;
