@@ -7,6 +7,7 @@
 #include "ModulePhysics.h"
 
 class PhysBody;
+class SDL_Texture;
 
 class ModuleSceneIntro : public Module
 {
@@ -36,6 +37,10 @@ public:
 	PhysBody* p_demon;
 	bool sensed;
 
+	SDL_Texture* circle;
+	SDL_Texture* box;
+	SDL_Texture* rick;
+	SDL_Texture* spritesheet;
 	
 	uint bonus_fx;
 	p2Point<int> ray;
@@ -61,8 +66,5 @@ public:
 	// 326		
 
 private:
-	SDL_Texture* circle;
-	SDL_Texture* box;
-	SDL_Texture* rick;
-	SDL_Texture* spritesheet;
+
 };

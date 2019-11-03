@@ -32,7 +32,7 @@ bool ModuleSceneIntro::Start()
 	App->audio->LoadFx("pinball/music/bar.wav");
 
 	App->renderer->camera.x = 0;
-	App->renderer->camera.y = (-424 + SCREEN_HEIGHT)*SCREEN_SIZE;
+	App->renderer->camera.y = (-561 + SCREEN_HEIGHT)*SCREEN_SIZE;
 
 	circle = App->textures->Load("pinball/wheel.png");
 	box = App->textures->Load("pinball/crate.png");
@@ -147,7 +147,7 @@ bool ModuleSceneIntro::Start()
 	walls.add(App->physics->CreateChain(-2, -2, spritesheet_6, 8, true));
 
 
-	ball=App->physics->CreateCircle(50, 50, 7);
+	ball=App->physics->CreateCircle(85, 530, 7);
 	ball->listener = this;
 	ball->body->SetType(b2_dynamicBody);
 
@@ -170,8 +170,8 @@ bool ModuleSceneIntro::Start()
 
 
 
-	kicker = App->physics->CreateRectangle(80, 530, 28, 10);
-	kicker->body->SetType(b2_staticBody);
+	kicker = App->physics->CreateRectangle(80, 530, 28, 10, true);
+	kicker->body->SetType(b2_kinematicBody);
 	kicker->listener = this;
 
 	return ret;
