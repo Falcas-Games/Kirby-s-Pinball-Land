@@ -35,7 +35,9 @@ public:
 	PhysBody* p_casper1;
 	PhysBody* p_casper2;
 	PhysBody* p_demon;
+	SDL_Rect scarfy[7];
 	bool sensed;
+	float scarfy_number;
 
 	bool right_bar_check = false;
 	bool left_bar_check = false;
