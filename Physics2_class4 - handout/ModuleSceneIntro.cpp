@@ -423,10 +423,16 @@ update_status ModuleSceneIntro::Update()
 		App->player->level--;
 	}
 
-	if (left_bar_check == true)
-		App->fonts->BlitText(44, 383, 1, "50",1);
-	if (right_bar_check == true)
-		App->fonts->BlitText(120, 382, 1, "50",1);
+	if (left_bar_check == true) {
+		rect = { 369,409,9,15 };
+		App->renderer->Blit(spritesheet, 39, 378, &rect);
+		App->fonts->BlitText(46, 383, 1, "50", 1);
+	}
+	if (right_bar_check == true) {
+		rect = { 378,414,9,15 };
+		App->renderer->Blit(spritesheet, 112, 378, &rect);
+		App->fonts->BlitText(120, 382, 1, "50", 1);
+	}
 	if (left_porcupine_check == true)
 		App->fonts->BlitText(37, 320, 1, "240", 1);
 	if (right_porcupine_check == true)
