@@ -32,6 +32,7 @@ bool ModuleSceneIntro::Start()
 	App->audio->LoadFx("pinball/music/bumper.wav");
 	App->audio->LoadFx("pinball/music/bar.wav");
 	App->audio->LoadFx("pinball/music/porcupine.wav");
+	App->audio->LoadFx("pinball/music/demon.wav");
 
 	App->fonts->Load("pinball/fonts.png", "0123456789", 1, 6, 9, 10);
 	App->fonts->Load("pinball/fonts2.png", "0123456789", 1, 8, 7, 10);
@@ -508,6 +509,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (bodyA == p_demon || bodyB == p_demon) {
 		demon_check = true;
 		App->player->score += 480;
+		App->audio->PlayFx(4);
 	}
 	else demon_check = false;
 
