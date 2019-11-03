@@ -165,9 +165,11 @@ bool ModuleSceneIntro::Start()
 
 	p_casper1 = App->physics->CreateCircle(46, 332, 8);
 	p_casper1->listener = this;
+	p_casper1->body->SetType (b2_kinematicBody);
 
 	p_casper2 = App->physics->CreateCircle(141, 332, 8);
 	p_casper2->listener = this;
+	p_casper2->body->SetType(b2_kinematicBody);
 
 
 
@@ -363,18 +365,24 @@ update_status ModuleSceneIntro::Update()
 		if (y_casper >= 300) {
 			x_casper-=0.5f;
 			x_casper2 -= 0.5f;
+			p_casper1->body->SetLinearVelocity({ -0.6f,0.0f });
+			p_casper2->body->SetLinearVelocity({ -0.6f,0.0f });
 		}
 	}
 	if (x_casper <= 12) {
 		if (y_casper >= 300) {
 			y_casper -= 0.5f;
 			y_casper2 -= 0.5f;
+			p_casper1->body->SetLinearVelocity({ 0.0f,-0.6f });
+			p_casper2->body->SetLinearVelocity({ 0.0f,-0.6f });
 		}
 	}
 	if (y_casper <= 300) {
 		if (x_casper <= 38) {
 			x_casper += 0.5f;
 			x_casper2 += 0.5f;
+			p_casper1->body->SetLinearVelocity({ 0.6f,0.0f });
+			p_casper2->body->SetLinearVelocity({ 0.6f,0.0f });
 		}
 	}
 	if (x_casper >= 38) {
@@ -382,6 +390,8 @@ update_status ModuleSceneIntro::Update()
 			doing_cicle = false;
 			y_casper += 0.5f;
 			y_casper2 += 0.5f;
+			p_casper1->body->SetLinearVelocity({ 0.0f,0.6f });
+			p_casper2->body->SetLinearVelocity({ 0.0f,0.6f });
 		}
 		else {
 			doing_cicle = true;
