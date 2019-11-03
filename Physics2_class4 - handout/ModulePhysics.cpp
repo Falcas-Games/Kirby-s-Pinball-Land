@@ -107,14 +107,12 @@ bool ModulePhysics::Start()
 	//bumper right
 
 	PhysBody* bumper_phys_right;// = CreateRectangle(60.5, 414, 22, 16);
-	body;
 	body.type = b2_dynamicBody;
 	body.position.Set(PIXEL_TO_METERS(100), PIXEL_TO_METERS(404));
 
 	b2Body* b2 = world->CreateBody(&body);
 
 	//b2Vec2 vertices[5];
-	vertices[0].Set(PIXEL_TO_METERS(0), PIXEL_TO_METERS(0));
 	vertices[1].Set(PIXEL_TO_METERS(-1), PIXEL_TO_METERS(8));
 	vertices[2].Set(PIXEL_TO_METERS(-24), PIXEL_TO_METERS(9));
 	vertices[3].Set(PIXEL_TO_METERS(-8), PIXEL_TO_METERS(1));
@@ -151,7 +149,36 @@ bool ModulePhysics::Start()
 	bumper_joint_right = (b2RevoluteJoint*)world->CreateJoint(&bumper_joint_def);
 
 
+	//create rectangles to avoid ball falling while dead
 
+	body.type = b2_staticBody;
+	body.position.Set(PIXEL_TO_METERS(36), PIXEL_TO_METERS(424));
+
+	b2 = world->CreateBody(&body);
+	vertices[1].Set(PIXEL_TO_METERS(35), PIXEL_TO_METERS(20));
+	vertices[2].Set(PIXEL_TO_METERS(35), PIXEL_TO_METERS(137));
+	vertices[3].Set(PIXEL_TO_METERS(0), PIXEL_TO_METERS(137));
+	count = 4;
+	box.Set(vertices, count);
+
+	fixture.shape = &box;
+	fixture.filter.groupIndex = -1;
+	
+	b2->CreateFixture(&fixture);
+
+	body.type = b2_staticBody;
+	body.position.Set(PIXEL_TO_METERS(124), PIXEL_TO_METERS(424));
+
+	b2 = world->CreateBody(&body);
+	vertices[1].Set(PIXEL_TO_METERS(-35), PIXEL_TO_METERS(20));
+	vertices[2].Set(PIXEL_TO_METERS(-35), PIXEL_TO_METERS(137));
+	vertices[3].Set(PIXEL_TO_METERS(0), PIXEL_TO_METERS(137));
+	box.Set(vertices, count);
+
+	fixture.shape = &box;
+	fixture.filter.groupIndex = -1;
+
+	b2->CreateFixture(&fixture);
 
 
 	return true;
@@ -200,7 +227,7 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
+PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, bool not_collide)
 {
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
@@ -213,6 +240,7 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 	b2FixtureDef fixture;
 	fixture.shape = &box;
 	fixture.density = 1.0f;
+	if (not_collide == true)fixture.filter.groupIndex = -1;
 
 	b->CreateFixture(&fixture);
 

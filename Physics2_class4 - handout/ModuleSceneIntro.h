@@ -7,6 +7,7 @@
 #include "ModulePhysics.h"
 
 class PhysBody;
+class SDL_Texture;
 
 class ModuleSceneIntro : public Module
 {
@@ -40,6 +41,11 @@ public:
 	bool left_bar_check = false;
 	bool left_porcupine_check = false;
 	bool right_porcupine_check = false;
+
+	SDL_Texture* circle;
+	SDL_Texture* box;
+	SDL_Texture* rick;
+	SDL_Texture* spritesheet;
 	
 	uint bonus_fx;
 	p2Point<int> ray;
@@ -65,8 +71,5 @@ public:
 	// 326		
 
 private:
-	SDL_Texture* circle;
-	SDL_Texture* box;
-	SDL_Texture* rick;
-	SDL_Texture* spritesheet;
+
 };

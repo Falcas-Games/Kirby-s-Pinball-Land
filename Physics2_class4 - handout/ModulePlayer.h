@@ -15,4 +15,7 @@ public:
 
 public:
 	int level;
+	int lives;
+	bool dead;
+	bool live_losed;
 };
