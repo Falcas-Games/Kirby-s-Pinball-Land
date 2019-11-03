@@ -49,7 +49,6 @@ bool ModulePhysics::Start()
 	PhysBody* bumper_phys_left;// = CreateRectangle(60.5, 414, 22, 16);
 	int width = 0;
 	int height = 0;
-	body;
 	body.type = b2_dynamicBody;
 	body.position.Set(PIXEL_TO_METERS(50), PIXEL_TO_METERS(404));
 
@@ -93,7 +92,7 @@ bool ModulePhysics::Start()
 	bumper_joint_def.lowerAngle = -45 * DEGTORAD;
 	bumper_joint_def.upperAngle = 0;
 	bumper_joint_def.enableMotor = false;
-	bumper_joint_def.maxMotorTorque = 10000.0f;
+	bumper_joint_def.maxMotorTorque = 50.0f;
 	bumper_joint_def.motorSpeed = 0 * DEGTORAD;
 	bumper_joint_left = (b2RevoluteJoint*)world->CreateJoint(&bumper_joint_def);
 
@@ -147,7 +146,7 @@ bool ModulePhysics::Start()
 	bumper_joint_def.lowerAngle = 0;
 	bumper_joint_def.upperAngle = 45 * DEGTORAD;
 	bumper_joint_def.enableMotor = false;
-	bumper_joint_def.maxMotorTorque = 10000.0f;
+	bumper_joint_def.maxMotorTorque = 50.0f;
 	bumper_joint_def.motorSpeed = 0 * DEGTORAD;
 	bumper_joint_right = (b2RevoluteJoint*)world->CreateJoint(&bumper_joint_def);
 
@@ -369,10 +368,6 @@ update_status ModulePhysics::PostUpdate()
 			}
 			break;
 			}
-
-			// TODO 1: If mouse button 1 is pressed ...
-			// App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN
-			// test if the current body contains mouse position
 			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN && body_contact == nullptr) {
 				PhysBody* bo = (PhysBody*)b->GetUserData();
 				if (bo != NULL && bo->Contains(App->input->GetMouseX(), App->input->GetMouseY()) == true) {
@@ -382,10 +377,6 @@ update_status ModulePhysics::PostUpdate()
 		}
 	}
 
-	// If a body was selected we will attach a mouse joint to it
-	// so we can pull it around
-	// TODO 2: If a body was selected, create a mouse joint
-	// using mouse_joint class property
 	if (mouse_joint == NULL && body_contact != nullptr) {
 		b2MouseJointDef def;
 		def.bodyA = ground;
@@ -397,13 +388,12 @@ update_status ModulePhysics::PostUpdate()
 		mouse_joint = (b2MouseJoint*)world->CreateJoint(&def);
 	}
 
-	// TODO 3: If the player keeps pressing the mouse button, update
-	// target position and draw a red line between both anchor points
+
 	else if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && mouse_joint != NULL) {
 		mouse_joint->SetTarget({ PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY()) });
 		App->renderer->DrawLine(METERS_TO_PIXELS(mouse_joint->GetAnchorA().x), METERS_TO_PIXELS(mouse_joint->GetAnchorA().y), METERS_TO_PIXELS(mouse_joint->GetAnchorB().x), METERS_TO_PIXELS(mouse_joint->GetAnchorB().y), 255, 0, 0);
 	}
-	// TODO 4: If the player releases the mouse button, destroy the joint
+
 	else if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP && mouse_joint != NULL) {
 		world->DestroyJoint(mouse_joint);
 		mouse_joint = NULL;

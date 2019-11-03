@@ -26,6 +26,7 @@ public:
 	PhysBody* bumper_left;
 	PhysBody* bumper_right;
 	PhysBody* ball;
+	PhysBody* kicker;
 	PhysBody* sensor;
 	PhysBody* p_porcupine;
 	PhysBody* p_casper1;
