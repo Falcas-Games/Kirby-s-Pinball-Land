@@ -149,16 +149,23 @@ bool ModuleSceneIntro::Start()
 
 	ball=App->physics->CreateCircle(50, 50, 7);
 	ball->listener = this;
+
 	p_porcupine1 = App->physics->CreateCircle(32, 320, 7);
 	p_porcupine1->listener = this;
+
 	p_porcupine2 = App->physics->CreateCircle(127, 320, 7);
 	p_porcupine2->listener = this;
+
 	p_demon = App->physics->CreateCircle(81, 351, 9);
 	p_demon->listener = this;
-	p_casper1 = App->physics->CreateCircle(81, 351, 9);
+
+	p_casper1 = App->physics->CreateCircle(46, 332, 8);
 	p_casper1->listener = this;
-	p_casper2 = App->physics->CreateCircle(81, 351, 9);
+
+	p_casper2 = App->physics->CreateCircle(141, 332, 8);
 	p_casper2->listener = this;
+
+
 
 	kicker = App->physics->CreateRectangle(80, 530, 28, 10);
 	kicker->body->SetType(b2_staticBody);
