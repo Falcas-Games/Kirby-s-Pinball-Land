@@ -7,6 +7,7 @@
 #include "ModuleAudio.h"
 #include "ModulePlayer.h"
 #include "ModulePhysics.h"
+#include "ModuleFonts.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -30,6 +31,8 @@ bool ModuleSceneIntro::Start()
 	App->audio->PlayMusic("pinball/music/music.ogg");
 	App->audio->LoadFx("pinball/music/bumper.wav");
 	App->audio->LoadFx("pinball/music/bar.wav");
+
+	App->fonts->Load("pinball/fonts.png", "0123456789", 1, 9, 6, 10);
 
 	App->renderer->camera.x = 0;
 	App->renderer->camera.y = (-424 + SCREEN_HEIGHT)*SCREEN_SIZE;
@@ -414,11 +417,13 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}
 	if (bodyA == item->data || bodyB == item->data) { // if the object is the left bar
 		App->audio->PlayFx(2);
+		App->fonts->BlitText(44, 383, 1, "50");
 	}
 	item = item->next;
 
 	if (bodyA == item->data || bodyB == item->data) { //if the object is the right bar
 		App->audio->PlayFx(2);
+		App->fonts->BlitText(120, 382, 1, "50");
 	}
 
 
