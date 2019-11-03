@@ -25,6 +25,8 @@ bool ModuleSceneIntro::Start()
 
 	spritesheet = App->textures->Load("pinball/spritesheet.png");
 
+	App->audio->PlayMusic("pinball/music/music.ogg");
+
 	App->renderer->camera.x = 0;
 	App->renderer->camera.y = (-424 + SCREEN_HEIGHT)*SCREEN_SIZE;
 
