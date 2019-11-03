@@ -10,7 +10,7 @@
 #ifdef _DEBUG
 #pragma comment( lib, "Box2D/libx86/Debug_/Box2D.lib" )
 #else
-#pragma comment( lib, "Box2D/libx86/Release_/Box2D.lib" )
+#pragma comment( lib, "../../Box2D/libx86/Release_/Box2D.lib" )
 #endif
 
 ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app, start_enabled)
