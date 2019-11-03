@@ -46,6 +46,9 @@ public:
 	bool left_porcupine_check = false;
 	bool right_porcupine_check = false;
 	bool demon_check = false;
+	bool left_casper_check = false;
+	bool right_casper_check = false;
+
 
 	SDL_Texture* circle;
 	SDL_Texture* box;

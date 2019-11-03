@@ -32,6 +32,8 @@ bool ModuleSceneIntro::Start()
 	App->audio->LoadFx("pinball/music/bar.wav");
 	App->audio->LoadFx("pinball/music/porcupine.wav");
 	App->audio->LoadFx("pinball/music/demon.wav");
+	App->audio->LoadFx("pinball/music/ghost.wav");
+
 
 	App->fonts->Load("pinball/fonts.png", "0123456789", 1, 6, 9, 10);
 	App->fonts->Load("pinball/fonts2.png", "0123456789", 1, 8, 7, 10);
@@ -472,6 +474,12 @@ update_status ModuleSceneIntro::Update()
 		App->fonts->BlitText(134, 320, 1, "240", 1);
 	if(demon_check==true)
 		App->fonts->BlitText(92, 351, 1, "480", 1);
+	if(left_casper_check==true)
+		App->fonts->BlitText(x_casper + 5, y_casper + 15, 1, "360", 1);
+	if(right_casper_check==true)
+		App->fonts->BlitText(x_casper2+5, y_casper2+15, 1, "360", 1);
+
+
 	int j = 0;
 	if (App->player->level == 3) {
 		App->renderer->Blit(spritesheet, 56, 332, &scarfy[(int)scarfy_number]);
@@ -571,17 +579,18 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}
 	else demon_check = false;
 
-
-	/*
-	if(bodyA)
-	{
-		bodyA->GetPosition(x, y);
-		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
+	if (bodyA == p_casper1 || bodyB == p_casper1) {
+		left_casper_check = true;
+		App->player->score += 360;
+		App->audio->PlayFx(4);
 	}
+	else left_casper_check = false;
 
-	if(bodyB)
-	{
-		bodyB->GetPosition(x, y);
-		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
-	}*/
+	if (bodyA == p_casper2 || bodyB == p_casper2) {
+		right_casper_check = true;
+		App->player->score += 360;
+		App->audio->PlayFx(4);
+	}
+	else right_casper_check = false;
+
 }
