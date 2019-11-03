@@ -4,6 +4,7 @@
 #include "p2Point.h"
 #include "Globals.h"
 #include "Animation.h"
+#include "ModulePhysics.h"
 
 class PhysBody;
 
@@ -53,6 +54,8 @@ public:
 
 	float x_casper2 = 133;
 	float y_casper2 = 326;
+
+	b2Vec2 vec;
 
 	bool doing_cicle = true;
 
