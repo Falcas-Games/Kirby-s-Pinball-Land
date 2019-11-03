@@ -430,7 +430,7 @@ update_status ModuleSceneIntro::Update()
 	}
 	App->renderer->Blit(spritesheet, x_casper, y_casper, &casper.GetCurrentFrame());
 	App->renderer->Blit(spritesheet, x_casper2, y_casper2, &casper.GetCurrentFrame());
-	if(demon_not_visible==false)App->renderer->Blit(spritesheet, 71, 342, &demon.GetCurrentFrame());
+	if(demon_not_visible==false) App->renderer->Blit(spritesheet, 71, 342, &demon.GetCurrentFrame());
 	
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
@@ -533,6 +533,8 @@ update_status ModuleSceneIntro::Update()
 		else
 			App->fonts->BlitText(SCREEN_WIDTH / 2 - 22, 558 - SCREEN_HEIGHT / 2 + 10, 1, score_text, 1);
 	}
+
+	App->physics->CreateCircle(SCREEN_WIDTH / 2 - 1, 295, 1);
 
 	return UPDATE_CONTINUE;
 }
