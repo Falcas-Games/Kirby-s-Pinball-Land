@@ -263,9 +263,6 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(spritesheet, 49, 406, &rect, 1.0f, bumper_left->GetRotation(),22,18); //Left Bumper
 	App->renderer->Blit(spritesheet, 24, 312, &porcupine.GetCurrentFrame()); //Porcupine draw
 	App->renderer->Blit(spritesheet, 119, 312, &porcupine.GetCurrentFrame()); //porcupine 2 draw
-	rect = { 272,395,14,14 };
-	ball->GetPosition(x, y);
-	App->renderer->Blit(spritesheet, x, y, &rect); //Right Bumper
 	rect = { 308,407,28,15 };
 	kicker->GetPosition(x, y);
 	App->renderer->Blit(spritesheet, x, y, &rect); //kicker draw
@@ -312,32 +309,32 @@ update_status ModuleSceneIntro::Update()
 		}
 	}
 	if (x_casper == 11.5 && y_casper < 326.5) {
-		p_casper1->body->SetLinearVelocity({ 0.0f,-0.5f });
-		p_casper2->body->SetLinearVelocity({ 0.0f,-0.5f });
+		p_casper1->body->SetLinearVelocity({ 0.0f,-0.55f });
+		p_casper2->body->SetLinearVelocity({ 0.0f,-0.55f });
 	}
 	else if (x_casper == 11.5 && y_casper == 326.5) {
 		p_casper1->body->SetLinearVelocity({ -0.5f,-0.5f });
 		p_casper2->body->SetLinearVelocity({ -0.5f,-0.5f });
 	}
 	else if (x_casper == 38.5 && y_casper > 299.5) {
-		p_casper1->body->SetLinearVelocity({ 0.0f,0.5f });
-		p_casper2->body->SetLinearVelocity({ 0.0f,0.5f });
+		p_casper1->body->SetLinearVelocity({ 0.0f,0.55f });
+		p_casper2->body->SetLinearVelocity({ 0.0f,0.55f });
 	}
 	else if (x_casper == 38.5 && y_casper == 299.5) {
 		p_casper1->body->SetLinearVelocity({ 0.5f,0.5f });
 		p_casper2->body->SetLinearVelocity({ 0.5f,0.5f });
 	}
 	else if (y_casper == 326.5 && x_casper < 38.5) {
-		p_casper1->body->SetLinearVelocity({ -0.5f,0.0f });
-		p_casper2->body->SetLinearVelocity({ -0.5f,0.0f });
+		p_casper1->body->SetLinearVelocity({ -0.55f,0.0f });
+		p_casper2->body->SetLinearVelocity({ -0.55f,0.0f });
 	}
 	else if (y_casper == 326.5 && x_casper == 38.5) {
 		p_casper1->body->SetLinearVelocity({ -0.5f,-0.5f });
 		p_casper2->body->SetLinearVelocity({ -0.5f,-0.5f });
 	}
 	else if (y_casper == 299.5 && x_casper > 11.5) {
-		p_casper1->body->SetLinearVelocity({ 0.5f,0.0f });
-		p_casper2->body->SetLinearVelocity({ 0.5f,0.0f });
+		p_casper1->body->SetLinearVelocity({ 0.55f,0.0f });
+		p_casper2->body->SetLinearVelocity({ 0.55f,0.0f });
 	}
 	else if (y_casper == 299.5 && x_casper == 11.5) {
 		p_casper1->body->SetLinearVelocity({ 0.5f,0.5f });
@@ -499,7 +496,9 @@ update_status ModuleSceneIntro::Update()
 			App->fonts->BlitText(SCREEN_WIDTH / 2 - 22, 558 - SCREEN_HEIGHT / 2 + 10, 1, score_text, 1);
 	}
 
-
+	rect = { 272,395,14,14 };
+	ball->GetPosition(x, y);
+	App->renderer->Blit(spritesheet, x, y, &rect); //Right Bumper
 	return UPDATE_CONTINUE;
 }
 
