@@ -92,7 +92,7 @@ bool ModulePhysics::Start()
 	bumper_joint_def.lowerAngle = -45 * DEGTORAD;
 	bumper_joint_def.upperAngle = 0;
 	bumper_joint_def.enableMotor = false;
-	bumper_joint_def.maxMotorTorque = 50.0f;
+	bumper_joint_def.maxMotorTorque = 5.0f;
 	bumper_joint_def.motorSpeed = 0 * DEGTORAD;
 	bumper_joint_left = (b2RevoluteJoint*)world->CreateJoint(&bumper_joint_def);
 
@@ -146,7 +146,7 @@ bool ModulePhysics::Start()
 	bumper_joint_def.lowerAngle = 0;
 	bumper_joint_def.upperAngle = 45 * DEGTORAD;
 	bumper_joint_def.enableMotor = false;
-	bumper_joint_def.maxMotorTorque = 50.0f;
+	bumper_joint_def.maxMotorTorque = 5.0f;
 	bumper_joint_def.motorSpeed = 0 * DEGTORAD;
 	bumper_joint_right = (b2RevoluteJoint*)world->CreateJoint(&bumper_joint_def);
 
