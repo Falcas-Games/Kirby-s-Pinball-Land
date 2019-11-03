@@ -503,6 +503,18 @@ update_status ModuleSceneIntro::Update()
 		for (int i = App->player->lives; i > 0; i--) App->renderer->Blit(spritesheet, (i - 1) * 11, 424, &rect);
 	}
 	if (demon_not_visible == true && score_demon_not_visible + 1000 <= App->player->score) demon_not_visible = false;
+
+	if (App->player->dead == true) {
+		if(App->player->score == 0)
+			App->fonts->BlitText(SCREEN_WIDTH / 2 - 4, 558 - SCREEN_HEIGHT / 2, 2, score_text, 1);
+		else if(App->player->score<1000)
+			App->fonts->BlitText(SCREEN_WIDTH / 2 - 14, 558 - SCREEN_HEIGHT / 2, 2, score_text, 1);
+		else if(App->player->score < 10000)
+			App->fonts->BlitText(SCREEN_WIDTH/2-18, 558-SCREEN_HEIGHT/2, 2, score_text, 1);
+		else
+			App->fonts->BlitText(SCREEN_WIDTH / 2 - 22, 558 - SCREEN_HEIGHT / 2, 2, score_text, 1);
+	}
+
 	return UPDATE_CONTINUE;
 }
 
