@@ -15,4 +15,5 @@ public:
 
 public:
 	int level;
+	int lives;
 };
