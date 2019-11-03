@@ -125,10 +125,10 @@ bool ModuleSceneIntro::Start()
 		137, 379
 	};
 	int spritesheet_5[8] = {
-		45, 383,
-		49, 390,
-		47, 391,
-		43, 384
+		44, 383,
+		49, 391,
+		46, 390,
+		44, 384
 	};
 	int spritesheet_6[8] = {
 		120, 382,
